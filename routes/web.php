@@ -19,6 +19,8 @@ Route::get('/orders/add_purchase/', function () {
     return view('orders_add_purchase');
 })->middleware(['auth', 'verified'])->name('orders_add_purchase');
 
+Route::post('/orders/add_purchase', [App\Http\Controllers\ProductionController::class, 'store'])->name('orders_add_purchase.store');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

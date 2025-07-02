@@ -41,7 +41,6 @@
                     </form>
 
 
-
                     <!-- Table -->
                     <div class="table-responsive table-wrapper " style="overflow-x: auto; white-space: nowrap; max-width: 100%;">
                         <table class="table table-hover table-borderless sticky-table">

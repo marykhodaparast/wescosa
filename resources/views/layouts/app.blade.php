@@ -261,6 +261,12 @@
             margin-left: 3px;
         }
 
+        .logout-button-style {
+            border: none !important;
+            color: rgb(3, 36, 76) !important;
+            background-color: #AEC3EA !important;
+        }
+
     </style>
 
 </head>
@@ -277,7 +283,11 @@
                 <a href="#">Reports</a>
                 <a href="#">Analytics</a>
                 <a href="#">Settings</a>
-                <a href="/logout/" class="logout">Logout</a>
+                <form method="POST" action="/logout" style="margin-top:260px !important;">
+                    @csrf
+                    <button type="submit" class="logout logout-button-style">Logout</button>
+                </form>
+
             </nav>
         </div>
 

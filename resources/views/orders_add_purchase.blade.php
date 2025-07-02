@@ -7,10 +7,18 @@
     </x-slot>
 
     <main class="col-md-10 p-4 content">
+
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
         <!-- Top Bar (User Info) -->
         <div class="row mb-4">
             <div class="col-10">
-                <h4><b>Welcome Hamza</b></h4>
+                <h4><b>Welcome {{ auth()->user()->name }}</b></h4>
             </div>
             <div class="col-2">
                 <div class="profile">
@@ -53,7 +61,8 @@
 
 
         </div>
-        <form class="form" method="post" action="/orders/add_purchase/" id="purchaseForm" onsubmit="return validateAddPurchaseForm();">
+        <form class="form" method="post" action="{{ route('orders_add_purchase.store') }}" id="purchaseForm" onsubmit="return validateAddPurchaseForm();">
+            @csrf
             <input type="hidden" name="csrfmiddlewaretoken" value="TrHkIpbC4SgGFPnWim1f2caoSOR9EktZ3dvyz5sg5ieN4uKivLTPvOMexPJFu0lT">
 
             <div class="row">
@@ -207,10 +216,6 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
-                                                <!-- <div class="form-group mt-4">
-                                          <button type="button" class="btn btn-primary"> + Add</button>
-                                          <button type="button" class="btn btn-danger disabled">Remove</button>
-                                       </div> -->
                                             </div>
                                         </div>
 
