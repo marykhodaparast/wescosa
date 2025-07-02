@@ -11,6 +11,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/orders/po_list/', function () {
+    return view('orders_list');
+})->middleware(['auth', 'verified'])->name('orders_list');
+
+Route::get('/orders/add_purchase/', function () {
+    return view('orders_add_purchase');
+})->middleware(['auth', 'verified'])->name('orders_add_purchase');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -19,12 +27,4 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-// Route::get('/', function () {
-//     return redirect('/login');
-// });
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-// });
