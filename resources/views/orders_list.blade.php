@@ -46,61 +46,99 @@
                         <table class="table table-hover table-borderless sticky-table">
                             <thead class="table-light">
                                 <tr>
-                                    <!-- <th>
-                               <input type="checkbox" id="selectAll">
-                           </th> -->
                                     <th>No</th>
                                     <th>PO NUMBER</th>
                                     <th>PRODUCT NAME</th>
                                     <th>CUSTOMER</th>
                                     <th>REQUEST DATE</th>
                                     <th>ETD</th>
-
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                $i = 1;
+                                @endphp
 
+                                @foreach($data as $item)
                                 <tr>
-                                    <!-- <td>
-
-                                   <input type="checkbox" class="row-checkbox form-check-input">
-                               </td> -->
-                                    <td>1</td>
-                                    <td><a href="/orders/single_order/29/" class="" style="text-decoration: none;color: black;">PO-1003</a></td>
-                                    <td>Starter Panel</td>
-                                    <td>Soil Industries</td>
-                                    <td>Aug. 8, 2025</td>
-                                    <td>Nov. 29, 2025</td>
-
+                                    <td>{{ $i }}</td>
+                                    <td><a href="/orders/single_order/29/" class="" style="text-decoration: none;color: black;">PO-{{ 1000 + $i }}</a></td>
+                                    <td>
+                                        @switch($item->product_name)
+                                        @case('1')
+                                        MS100 Main Switch
+                                        @break
+                                        @case('2')
+                                        MS250 Main Switch
+                                        @break
+                                        @case('3')
+                                        TB125 Tie Breaker
+                                        @break
+                                        @case('4')
+                                        TB160 Tie Breaker
+                                        @break
+                                        @case('5')
+                                        DB Single Phase
+                                        @break
+                                        @case('6')
+                                        DB Three Phase
+                                        @break
+                                        @case('7')
+                                        Starter Panel
+                                        @break
+                                        @case('8')
+                                        PLC Control Panel
+                                        @break
+                                        @case('9')
+                                        Copper Busbar 100A
+                                        @break
+                                        @case('10')
+                                        Aluminum Busbar 200A
+                                        @break
+                                        @case('11')
+                                        Relay 230V
+                                        @break
+                                        @case('12')
+                                        Contactor 40A
+                                        @break
+                                        @case('13')
+                                        Cable Lug
+                                        @break
+                                        @case('14')
+                                        PVC Trunking
+                                        @break
+                                        @case('15')
+                                        1kVA Transformer
+                                        @break
+                                        @case('16')
+                                        5kVA Transformer
+                                        @break
+                                        @case('17')
+                                        MCB 10A
+                                        @break
+                                        @case('18')
+                                        RCCB 63A
+                                        @break
+                                        @case('19')
+                                        Digital Voltmeter
+                                        @break
+                                        @case('20')
+                                        Energy Meter
+                                        @break
+                                        @endswitch
+                                    </td>
+                                    <td>{{ $item->customer }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->request_date)->format('M. j, Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->etd)->format('M. j, Y') }}</td>
                                 </tr>
+                                @php
+                                $i++;
+                                @endphp
 
-                                <tr>
-                                    <!-- <td>
+                                @endforeach
 
-                                   <input type="checkbox" class="row-checkbox form-check-input">
-                               </td> -->
-                                    <td>2</td>
-                                    <td><a href="/orders/single_order/28/" class="" style="text-decoration: none;color: black;">PO-1002</a></td>
-                                    <td>TB160 Tie Breaker</td>
-                                    <td>Soil Industries</td>
-                                    <td>July 26, 2025</td>
-                                    <td>Nov. 29, 2025</td>
 
-                                </tr>
 
-                                <tr>
-                                    <!-- <td>
-
-                                   <input type="checkbox" class="row-checkbox form-check-input">
-                               </td> -->
-                                    <td>3</td>
-                                    <td><a href="/orders/single_order/27/" class="" style="text-decoration: none;color: black;">PO-1001</a></td>
-                                    <td>MS100 Main Switch</td>
-                                    <td>Spark Industries</td>
-                                    <td>July 11, 2025</td>
-                                    <td>Nov. 27, 2025</td>
-
-                                </tr>
 
                             </tbody>
                         </table>

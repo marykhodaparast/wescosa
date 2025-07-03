@@ -7,13 +7,22 @@ use App\Http\Requests\StoreProductionRequest;
 
 class ProductionController extends Controller
 {
+    public function index()
+    {
+
+        $data = ProductionRequest::all();
+
+        return view('orders_list')->with([
+            'data' => $data
+        ]);
+
+    }
 
     public function store(StoreProductionRequest $request)
     {
         // Validate the request
         $validatedData = $request->validated();
 
-        //dd($validatedData);
 
         // Create a new production request
         ProductionRequest::create($validatedData);

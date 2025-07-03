@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,13 +12,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/orders/po_list/', function () {
-    return view('orders_list');
-})->middleware(['auth', 'verified'])->name('orders_list');
-
 Route::get('/orders/add_purchase/', function () {
     return view('orders_add_purchase');
 })->middleware(['auth', 'verified'])->name('orders_add_purchase');
+
+Route::get('/orders/po_list/', [App\Http\Controllers\ProductionController::class, 'index'])->name('orders_list');
 
 Route::post('/orders/add_purchase', [App\Http\Controllers\ProductionController::class, 'store'])->name('orders_add_purchase.store');
 
