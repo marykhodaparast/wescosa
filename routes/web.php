@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +16,8 @@ Route::get('/orders/add_purchase/', function () {
 })->middleware(['auth', 'verified'])->name('orders_add_purchase');
 
 Route::get('/orders/po_list/', [App\Http\Controllers\ProductionController::class, 'index'])->name('orders_list');
+
+Route::get('/orders/single_order/{id}', [App\Http\Controllers\ProductionController::class, 'single_order'])->name('single_order');
 
 Route::post('/orders/add_purchase', [App\Http\Controllers\ProductionController::class, 'store'])->name('orders_add_purchase.store');
 

@@ -35,6 +35,15 @@ class ProductionController extends Controller
         ]);
     }
 
+    public function single_order(int $id)
+    {
+        $production_request = ProductionRequest::findOrFail($id);
+
+        return view('single_order')->with([
+            'data' => $production_request
+        ]);
+    }
+
     public function store(StoreProductionRequest $request)
     {
         // Validate the request
