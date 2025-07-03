@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card pt-3 bg-light">
-                    <form method="GET" class="d-flex justify-content-between mb-3 pb-3 ps-3 pe-3 w-100">
+                    <form method="GET" action="{{ route("orders_list") }}" class="d-flex justify-content-between mb-3 pb-3 ps-3 pe-3 w-100">
                         <div class="input-group w-25">
                             <input type="text" name="q" class="form-control" placeholder="Search by PO " value="">
                             <button class="btn btn-outline-secondary" type="submit">
@@ -55,14 +55,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                $i = 1;
-                                @endphp
-
                                 @foreach($data as $item)
                                 <tr>
-                                    <td>{{ $i }}</td>
-                                    <td><a href="/orders/single_order/29/" class="" style="text-decoration: none;color: black;">PO-{{ 1000 + $i }}</a></td>
+                                    <td>{{ $item->id }}</td>
+                                    <td><a href="/orders/single_order/29/" class="" style="text-decoration: none;color: black;">PO-{{ 1000 + $item->id }}</a></td>
                                     <td>
                                         @switch($item->product_name)
                                         @case('1')
@@ -131,14 +127,8 @@
                                     <td>{{ \Carbon\Carbon::parse($item->request_date)->format('M. j, Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($item->etd)->format('M. j, Y') }}</td>
                                 </tr>
-                                @php
-                                $i++;
-                                @endphp
 
                                 @endforeach
-
-
-
 
                             </tbody>
                         </table>
