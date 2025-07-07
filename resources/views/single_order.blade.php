@@ -907,8 +907,9 @@
     <script>
         // ✅ Enable Save button only if form changes
         document.addEventListener("DOMContentLoaded", function() {
-            const form = document.querySelector("form");
+            const form = document.querySelector("#saveBtn").closest("form");
             const saveBtn = document.getElementById("saveBtn");
+
 
             const initialValues = {};
             Array.from(form.elements).forEach(el => {
