@@ -753,6 +753,15 @@
                     });
                     const url = URL.createObjectURL(svgBlob);
 
+                    const modalContent = document.querySelector('#qrModal .modal-content');
+
+                    if (!modalContent) {
+                        console.error("Modal content not found");
+                        return;
+                    }
+
+                    const contentToPrint = modalContent.innerHTML;
+
                     const image = new Image();
                     image.onload = async function() {
                         await new Promise(resolve => {
@@ -786,7 +795,8 @@
                             </style>
                         `);
                         printWindow.document.write('</head><body>');
-                        printWindow.document.write(`<img src="${pngUrl}" />`);
+                        // printWindow.document.write(`<img src="${pngUrl}" />`);
+                        printWindow.document.write(contentToPrint);
                         printWindow.document.write('</body></html>');
                         printWindow.document.close();
 
@@ -812,11 +822,7 @@
 
 
         function printQR() {
-            // const modalContent = document.querySelector('#qrModal .modal-content');
-            // const contentToPrint = modalContent.innerHTML;
-
             printSVGImageFromURL('#qrImage');
-
         }
     </script>
 
