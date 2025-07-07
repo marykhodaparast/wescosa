@@ -736,23 +736,82 @@
             new bootstrap.Modal(document.getElementById('qrModal')).show();
         }
 
+        function printSVGImageFromURL(imgSelector) {
+            const img = document.querySelector(imgSelector);
+            if (!img) {
+                alert("QR Image not found");
+                return;
+            }
+
+            const imgURL = img.src;
+
+            fetch(imgURL)
+                .then(res => res.text())
+                .then(svgText => {
+                    const svgBlob = new Blob([svgText], {
+                        type: "image/svg+xml"
+                    });
+                    const url = URL.createObjectURL(svgBlob);
+
+                    const image = new Image();
+                    image.onload = function() {
+                        if (!image.complete) {
+                            // If image not fully loaded yet
+                            console.log("Image not fully loaded yet");
+                            return;
+                        }
+
+                        const canvas = document.createElement("canvas");
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(image, 0, 0);
+                        URL.revokeObjectURL(url);
+
+                        const pngUrl = canvas.toDataURL("image/png");
+
+                        const printWindow = window.open('', '', 'width=800,height=600');
+                        printWindow.document.write('<html><head><title>Print QR</title>');
+                        printWindow.document.write(`
+                    <style>
+                        @media print {
+                            @page { size: 80mm 100mm; margin: 5mm; }
+                            body { font-family: Arial; text-align: center; }
+                            img { max-width: 150px; }
+                        }
+                    </style>
+                `);
+                        printWindow.document.write('</head><body>');
+                        printWindow.document.write(`<img src="${pngUrl}" />`);
+                        printWindow.document.write('</body></html>');
+                        printWindow.document.close();
+                        printWindow.focus();
+                        printWindow.print();
+                        printWindow.close();
+                    };
+
+                    image.onerror = function() {
+                        alert("Image failed to load.");
+                    };
+
+                    image.src = url;
+                })
+                .catch(error => {
+                    console.error("Failed to load SVG:", error);
+                    alert("Failed to load QR image.");
+                });
+        }
+
+
+
         function printQR() {
             const modalContent = document.querySelector('#qrModal .modal-content');
             const contentToPrint = modalContent.innerHTML;
-            const printWindow = window.open('', '', 'width=800,height=600');
-            printWindow.document.write('<html><head><title>Print QR</title>');
-            printWindow.document.write(`
-            <style>
-                @media print {
-                    @page { size: 80mm 100mm; margin: 5mm; }
-                    body { font-family: Arial; text-align: center; }
-                    img { max-width: 150px; }
-                    p { font-size: 12px; margin: 4px 0; }
-                    .btn-close, button { display: none; }
-                }
-            </style>
-           `);
-            printWindow.document.write('</head><body>' + contentToPrint + '</body></html>');
+            //const printWindow = window.open('', '', 'width=800,height=600');
+
+            printSVGImageFromURL('#qrImage');
+
             printWindow.document.close();
             printWindow.focus();
             printWindow.print();

@@ -88,5 +88,7 @@ class ProductionController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+
+        
     }
 }
