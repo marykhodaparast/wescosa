@@ -567,10 +567,163 @@
             </form>
         </div>
     </main>
+    <script id="childJson" type="application/json">
+        [{
+            "id": 157
+            , "name": "Mounting Plate #2"
+            , "quantity": 2
+            , "unit_price": "245.03"
+            , "total_price": "490.06"
+            , "ordered_date": "08-08-2025"
+            , "eta": ""
+            , "ata": ""
+            , "inspection": ""
+            , "pm": ""
+            , "image": "/5_710kykO.png"
+            , "qr_url": ""
+        }, {
+            "id": 158
+            , "name": "Fuse Holder #5"
+            , "quantity": 10
+            , "unit_price": "495.19"
+            , "total_price": "4951.90"
+            , "ordered_date": "08-08-2025"
+            , "eta": ""
+            , "ata": ""
+            , "inspection": ""
+            , "pm": ""
+            , "image": "/7_gYXcNbt.png"
+            , "qr_url": ""
+        }, {
+            "id": 159
+            , "name": "Spare Circuit Breaker #6"
+            , "quantity": 5
+            , "unit_price": "445.64"
+            , "total_price": "2228.20"
+            , "ordered_date": "08-08-2025"
+            , "eta": ""
+            , "ata": ""
+            , "inspection": ""
+            , "pm": ""
+            , "image": "/2_dMxAtFY.png"
+            , "qr_url": ""
+        }, {
+            "id": 160
+            , "name": "Cooling Fan #3"
+            , "quantity": 8
+            , "unit_price": "315.01"
+            , "total_price": "2520.08"
+            , "ordered_date": "08-08-2025"
+            , "eta": ""
+            , "ata": ""
+            , "inspection": ""
+            , "pm": ""
+            , "image": "/4_lYeDMYY.png"
+            , "qr_url": ""
+        }, {
+            "id": 161
+            , "name": "Protective Cover #1"
+            , "quantity": 4
+            , "unit_price": "157.29"
+            , "total_price": "629.16"
+            , "ordered_date": "08-08-2025"
+            , "eta": ""
+            , "ata": ""
+            , "inspection": ""
+            , "pm": ""
+            , "image": "/11_qZLVMe9.png"
+            , "qr_url": ""
+        }, {
+            "id": 162
+            , "name": "Wiring Kit #4"
+            , "quantity": 6
+            , "unit_price": "395.63"
+            , "total_price": "2373.78"
+            , "ordered_date": "08-08-2025"
+            , "eta": ""
+            , "ata": ""
+            , "inspection": ""
+            , "pm": ""
+            , "image": "/6_UMmSbAS.png"
+            , "qr_url": ""
+        }]
 
+    </script>
 
+    <script>
+        // ✅ Main Logic to Load Sidebar Data
+        document.addEventListener("DOMContentLoaded", function() {
+            const sidebar = document.querySelector(".modal-right");
+            const overlay = document.querySelector(".overlay");
+            const closeBtn = document.querySelector(".close");
 
+            const childData = JSON.parse(document.getElementById("childJson").textContent);
 
+            const classMap = {
+                one: 0
+                , two: 1
+                , three: 2
+                , four: 3
+                , five: 4
+                , six: 5
+            };
+
+            document.querySelectorAll(".one, .two, .three, .four, .five, .six").forEach(item => {
+                item.addEventListener("click", function() {
+                    sidebar.classList.add("show");
+                    overlay.classList.add("show");
+
+                    const selectedClass = Object.keys(classMap).find(cls => this.classList.contains(cls));
+                    const index = classMap[selectedClass];
+                    const child = childData[index];
+
+                    if (!child) {
+                        alert("Child not found");
+                        return;
+                    }
+
+                    // Store ID globally
+                    selectedChildId = child.id;
+                    qrAlreadyExists = !!child.qr_url;
+
+                    // Set QR button state
+                    const qrBtn = document.getElementById("qr-btn");
+                    if (qrAlreadyExists) {
+                        qrBtn.innerText = "View QR";
+                        qrBtn.dataset.qrUrl = child.qr_url;
+                    } else {
+                        qrBtn.innerText = "Generate QR";
+                        qrBtn.removeAttribute("data-qr-url");
+                    }
+
+                    // Fill modal fields
+                    document.getElementById("child-name").innerText = child.name;
+                    document.getElementById("child-qty").innerText = child.quantity;
+                    document.getElementById("child-unit-price").innerText = child.unit_price;
+                    document.getElementById("child-total-price").innerText = child.total_price;
+                    document.getElementById("child-date").innerText = child.ordered_date;
+                    document.getElementById("eta").value = child.eta;
+                    document.getElementById("ata").value = child.ata;
+                    document.getElementById("inspection").value = child.inspection;
+                    document.getElementById("pm-remarks").value = child.pm;
+                    document.getElementById("child-item-id").value = child.id;
+                    document.getElementById("child-image").src = child.image || "/static/images/no_image.png";
+                });
+            });
+
+            // Close Sidebar
+            closeBtn.addEventListener("click", () => {
+                sidebar.classList.remove("show");
+                overlay.classList.remove("show");
+            });
+
+            overlay.addEventListener("click", () => {
+                sidebar.classList.remove("show");
+                overlay.classList.remove("show");
+            });
+        });
+
+    </script>
 
 
 
