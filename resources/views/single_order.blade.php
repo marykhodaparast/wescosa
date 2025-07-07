@@ -250,7 +250,6 @@
         .form-contrl {
             font-size: 0.7rem !important;
         }
-
     </style>
 
 
@@ -275,90 +274,127 @@
         <!-- Dashboard Content -->
         <div class="row">
             <div class="col-12 ps-5">
-                <h2 class="text-left" id="ponum">PO-{{1000 + $data->id }}</h2>
+                <h2 class="text-left" id="ponum">PO-{{ 1000 + $data->id }}</h2>
 
 
                 <div class="job-info">
                     <div class="row">
-                        <div class="col-md-1"><small>Job No.</small><br><span class="bold-text">JOB-{{ $data->job_number }}</span></div>
+                        <div class="col-md-1"><small>Job No.</small><br><span
+                                class="bold-text">JOB-{{ $data->job_number }}</span></div>
                         <div class="col-md-2"><small>Product</small><br><span class="bold-text">
                                 @switch($data->product_name)
-                                @case('1')
-                                MS100 Main Switch
-                                @break
-                                @case('2')
-                                MS250 Main Switch
-                                @break
-                                @case('3')
-                                TB125 Tie Breaker
-                                @break
-                                @case('4')
-                                TB160 Tie Breaker
-                                @break
-                                @case('5')
-                                DB Single Phase
-                                @break
-                                @case('6')
-                                DB Three Phase
-                                @break
-                                @case('7')
-                                Starter Panel
-                                @break
-                                @case('8')
-                                PLC Control Panel
-                                @break
-                                @case('9')
-                                Copper Busbar 100A
-                                @break
-                                @case('10')
-                                Aluminum Busbar 200A
-                                @break
-                                @case('11')
-                                Relay 230V
-                                @break
-                                @case('12')
-                                Contactor 40A
-                                @break
-                                @case('13')
-                                Cable Lug
-                                @break
-                                @case('14')
-                                PVC Trunking
-                                @break
-                                @case('15')
-                                1kVA Transformer
-                                @break
-                                @case('16')
-                                5kVA Transformer
-                                @break
-                                @case('17')
-                                MCB 10A
-                                @break
-                                @case('18')
-                                RCCB 63A
-                                @break
-                                @case('19')
-                                Digital Voltmeter
-                                @break
-                                @case('20')
-                                Energy Meter
-                                @break
+                                    @case('1')
+                                        MS100 Main Switch
+                                    @break
+
+                                    @case('2')
+                                        MS250 Main Switch
+                                    @break
+
+                                    @case('3')
+                                        TB125 Tie Breaker
+                                    @break
+
+                                    @case('4')
+                                        TB160 Tie Breaker
+                                    @break
+
+                                    @case('5')
+                                        DB Single Phase
+                                    @break
+
+                                    @case('6')
+                                        DB Three Phase
+                                    @break
+
+                                    @case('7')
+                                        Starter Panel
+                                    @break
+
+                                    @case('8')
+                                        PLC Control Panel
+                                    @break
+
+                                    @case('9')
+                                        Copper Busbar 100A
+                                    @break
+
+                                    @case('10')
+                                        Aluminum Busbar 200A
+                                    @break
+
+                                    @case('11')
+                                        Relay 230V
+                                    @break
+
+                                    @case('12')
+                                        Contactor 40A
+                                    @break
+
+                                    @case('13')
+                                        Cable Lug
+                                    @break
+
+                                    @case('14')
+                                        PVC Trunking
+                                    @break
+
+                                    @case('15')
+                                        1kVA Transformer
+                                    @break
+
+                                    @case('16')
+                                        5kVA Transformer
+                                    @break
+
+                                    @case('17')
+                                        MCB 10A
+                                    @break
+
+                                    @case('18')
+                                        RCCB 63A
+                                    @break
+
+                                    @case('19')
+                                        Digital Voltmeter
+                                    @break
+
+                                    @case('20')
+                                        Energy Meter
+                                    @break
                                 @endswitch
 
                             </span>
                         </div>
-                        <div class="col-md-2"><small>Project Name</small><br><span class="bold-text">{{ $data->project_name }}</span></div>
-                        <div class="col-md-2"><small>Customer</small><br><span class="bold-text">{{ $data->customer }}</span></div>
-                        <div class="col-md-2"><small>No.of Structures</small><br><span class="bold-text">{{ $data->no_of_structures }}</span></div>
-                        <div class="col-md-2"><small>No.of Workers</small><br><span class="bold-text">{{ $data->no_of_workers }}</span></div>
-                        <div class="col-md-1"><small>Feeders</small><br><span class="bold-text">{{ $data->feeders }}</span></div>
-                        <div class="col-md-1"><small>Main</small><br><span class="bold-text">{{ $data->main }}</span></div>
-                        <div class="col-md-1"><small>Tie</small><br><span class="bold-text">{{ $data->tie }}</span></div>
-                        <div class="col-md-2"><small>Request Date</small><br><span class="bold-text">{{ \Carbon\Carbon::parse($data->request_date)->format('M. j, Y') }}</span></div>
-                        <div class="col-md-2"><small>Start Date</small><br><span class="bold-text">{{ \Carbon\Carbon::parse($data->start_date)->format('M. j, Y') }}</span></div>
-                        <div class="col-md-2"><small>End Date</small><br><span class="bold-text">{{ \Carbon\Carbon::parse($data->end_date)->format('M. j, Y') }}</span></div>
-                        <div class="col-md-2"><small>ETD</small><br><span class="bold-text">{{ \Carbon\Carbon::parse($data->etd)->format('M. j, Y') }}</span></div>
-                        <div class="col-md-2"><small>ATD</small><br><span class="bold-text">{{ \Carbon\Carbon::parse($data->atd)->format('M. j, Y') }}</span></div>
+                        <div class="col-md-2"><small>Project Name</small><br><span
+                                class="bold-text">{{ $data->project_name }}</span></div>
+                        <div class="col-md-2"><small>Customer</small><br><span
+                                class="bold-text">{{ $data->customer }}</span></div>
+                        <div class="col-md-2"><small>No.of Structures</small><br><span
+                                class="bold-text">{{ $data->no_of_structures }}</span></div>
+                        <div class="col-md-2"><small>No.of Workers</small><br><span
+                                class="bold-text">{{ $data->no_of_workers }}</span></div>
+                        <div class="col-md-1"><small>Feeders</small><br><span
+                                class="bold-text">{{ $data->feeders }}</span></div>
+                        <div class="col-md-1"><small>Main</small><br><span class="bold-text">{{ $data->main }}</span>
+                        </div>
+                        <div class="col-md-1"><small>Tie</small><br><span class="bold-text">{{ $data->tie }}</span>
+                        </div>
+                        <div class="col-md-2"><small>Request Date</small><br><span
+                                class="bold-text">{{ \Carbon\Carbon::parse($data->request_date)->format('M. j, Y') }}</span>
+                        </div>
+                        <div class="col-md-2"><small>Start Date</small><br><span
+                                class="bold-text">{{ \Carbon\Carbon::parse($data->start_date)->format('M. j, Y') }}</span>
+                        </div>
+                        <div class="col-md-2"><small>End Date</small><br><span
+                                class="bold-text">{{ \Carbon\Carbon::parse($data->end_date)->format('M. j, Y') }}</span>
+                        </div>
+                        <div class="col-md-2"><small>ETD</small><br><span
+                                class="bold-text">{{ \Carbon\Carbon::parse($data->etd)->format('M. j, Y') }}</span>
+                        </div>
+                        <div class="col-md-2"><small>ATD</small><br><span
+                                class="bold-text">{{ \Carbon\Carbon::parse($data->atd)->format('M. j, Y') }}</span>
+                        </div>
                     </div>
 
                     <div class="grid-container" style="margin-top: 50px;">
@@ -486,7 +522,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body text-center">
-                        <img id="qrImage" src="" class="img-fluid" style="max-width: 150px;" alt="QR Code">
+                        <img id="qrImage" src="" class="img-fluid" style="max-width: 150px;"
+                            alt="QR Code">
                         <div class="mt-2" style="font-size: 14px;">
                             <p><span class="fs-6" id="qrName"></span></p>
 
@@ -494,7 +531,8 @@
                             <p>Qty: <span id="qrQty"></span></p>
                         </div>
                         <br><br>
-                        <button class="btn btn-sm btn-dark" onclick="printQR()">Print QR</button> <!-- Smaller button -->
+                        <button class="btn btn-sm btn-dark" onclick="printQR()">Print QR</button>
+                        <!-- Smaller button -->
                     </div>
                 </div>
             </div>
@@ -539,31 +577,37 @@
 
             <!-- Form should not be inside .row unless you want grid columns inside -->
             <form method="POST" action="/orders/update_eta_ata/" style="margin-top: 15px;">
-                <input type="hidden" name="csrfmiddlewaretoken" value="598BMLui4JhTAF2jrtAZ0L5NCuNLeVX8b0yJdslPQCzknnqhZIXDqvcUczt5NohF">
+                <input type="hidden" name="csrfmiddlewaretoken"
+                    value="598BMLui4JhTAF2jrtAZ0L5NCuNLeVX8b0yJdslPQCzknnqhZIXDqvcUczt5NohF">
                 <input type="hidden" class="form-control" name="item_id" id="child-item-id">
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">ETA</label>
-                    <input type="date" class="form-control" id="eta" name="eta" style="font-size: 0.7rem;">
+                    <input type="date" class="form-control" id="eta" name="eta"
+                        style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">ATA</label>
-                    <input type="date" class="form-control" id="ata" name="ata" style="font-size: 0.7rem;">
+                    <input type="date" class="form-control" id="ata" name="ata"
+                        style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">Inspection Remarks</label>
-                    <input type="text" class="form-control" id="inspection" name="inspection" style="font-size: 0.7rem;">
+                    <input type="text" class="form-control" id="inspection" name="inspection"
+                        style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-3">
                     <label style="font-size: 12px;">Production Manager Remarks</label>
-                    <input type="text" class="form-control" id="pm-remarks" name="pm_remarks" style="font-size: 0.7rem;">
+                    <input type="text" class="form-control" id="pm-remarks" name="pm_remarks"
+                        style="font-size: 0.7rem;">
                 </div>
 
                 <button type="submit" class="btn btn-primary mt-2" id="saveBtn" disabled>Save Changes</button>
-                <button type="button" id="qr-btn" class="btn btn-success mt-2" onclick="handleQRClick()">Generate QR</button>
+                <button type="button" id="qr-btn" class="btn btn-success mt-2"
+                    onclick="handleQRClick()">Generate QR</button>
             </form>
         </div>
     </main>
@@ -651,6 +695,75 @@
     </script>
 
     <script>
+        const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let selectedChildId = 1; // set this dynamically
+        let qrAlreadyExists = false;
+
+        function handleQRClick() {
+            const name = document.getElementById('child-name')?.textContent || '';
+            const qty = document.getElementById('child-qty')?.textContent || '';
+            const poNumber = document.getElementById('ponum')?.textContent.trim() || '';
+
+            document.getElementById('qrName').textContent = name;
+            document.getElementById('qrQty').textContent = qty;
+            document.getElementById('qrPO').textContent = poNumber;
+
+            const qrBtn = document.getElementById("qr-btn");
+
+            if (qrAlreadyExists) {
+                viewQR(qrBtn.dataset.qrUrl);
+            } else {
+                fetch(`/orders/generate-qr/${selectedChildId}`, {
+                        method: "GET"
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            qrAlreadyExists = true;
+                            qrBtn.innerText = "View QR";
+                            qrBtn.dataset.qrUrl = data.qr_url;
+                            viewQR(data.qr_url);
+                        } else {
+                            alert("QR Generation failed");
+                        }
+                    });
+            }
+
+        }
+
+        function viewQR(qrUrl) {
+            document.getElementById('qrImage').src = qrUrl;
+            new bootstrap.Modal(document.getElementById('qrModal')).show();
+        }
+
+        function printQR() {
+            const modalContent = document.querySelector('#qrModal .modal-content');
+            const contentToPrint = modalContent.innerHTML;
+            const printWindow = window.open('', '', 'width=800,height=600');
+            printWindow.document.write('<html><head><title>Print QR</title>');
+            printWindow.document.write(`
+            <style>
+                @media print {
+                    @page { size: 80mm 100mm; margin: 5mm; }
+                    body { font-family: Arial; text-align: center; }
+                    img { max-width: 150px; }
+                    p { font-size: 12px; margin: 4px 0; }
+                    .btn-close, button { display: none; }
+                }
+            </style>
+           `);
+            printWindow.document.write('</head><body>' + contentToPrint + '</body></html>');
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+            printWindow.close();
+
+        }
+    </script>
+
+
+
+    <script>
         // ✅ Main Logic to Load Sidebar Data
         document.addEventListener("DOMContentLoaded", function() {
             const sidebar = document.querySelector(".modal-right");
@@ -660,12 +773,12 @@
             const childData = JSON.parse(document.getElementById("childJson").textContent);
 
             const classMap = {
-                one: 0
-                , two: 1
-                , three: 2
-                , four: 3
-                , five: 4
-                , six: 5
+                one: 0,
+                two: 1,
+                three: 2,
+                four: 3,
+                five: 4,
+                six: 5
             };
 
             document.querySelectorAll(".one, .two, .three, .four, .five, .six").forEach(item => {
@@ -673,7 +786,8 @@
                     sidebar.classList.add("show");
                     overlay.classList.add("show");
 
-                    const selectedClass = Object.keys(classMap).find(cls => this.classList.contains(cls));
+                    const selectedClass = Object.keys(classMap).find(cls => this.classList.contains(
+                        cls));
                     const index = classMap[selectedClass];
                     const child = childData[index];
 
@@ -707,7 +821,8 @@
                     document.getElementById("inspection").value = child.inspection;
                     document.getElementById("pm-remarks").value = child.pm;
                     document.getElementById("child-item-id").value = child.id;
-                    document.getElementById("child-image").src = child.image || "/static/images/no_image.png";
+                    document.getElementById("child-image").src = child.image ||
+                        "/static/images/no_image.png";
                 });
             });
 
@@ -722,9 +837,36 @@
                 overlay.classList.remove("show");
             });
         });
-
     </script>
 
+    <script>
+        // ✅ Enable Save button only if form changes
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector("form");
+            const saveBtn = document.getElementById("saveBtn");
 
+            const initialValues = {};
+            Array.from(form.elements).forEach(el => {
+                if (el.name) {
+                    initialValues[el.name] = el.value;
+                }
+            });
+
+            form.addEventListener("input", () => {
+                let changed = false;
+                Array.from(form.elements).forEach(el => {
+                    if (el.name && initialValues[el.name] !== el.value) {
+                        changed = true;
+                    }
+                });
+                saveBtn.disabled = !changed;
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
 
 </x-app-layout>
