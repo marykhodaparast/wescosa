@@ -264,8 +264,8 @@
                 <div class="profile">
                     <img src="{{ asset('user1.jpg') }}" alt="Profile Image">
                     <div class="profile-text">
-                        <h6></h6>
-                        <p></p>
+                        <h6>{{ auth()?->user()?->name}}</h6>
+                        <p>Production Manager</p>
                     </div>
                 </div>
             </div>
