@@ -274,7 +274,7 @@
         <!-- Dashboard Content -->
         <div class="row">
             <div class="col-12 ps-5">
-                <h2 class="text-left" id="ponum">PO-{{ 1000 + $data->id }}</h2>
+                <h2 class="text-left" id="ponum">{{ $data->po_number ? $data->po_number : 'PO-' . (1000 + $data->id)}}</h2>
 
 
                 <div class="job-info">
