@@ -19,7 +19,7 @@
                     <img src="{{ asset('user1.jpg') }}" alt="Profile Image" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                     <div class="profile-text">
                         <h6 class="mb-0">{{auth()->user()->name}}</h6>
-                        <small>Production Manager</small>
+                        <small style="white-space:nowrap !important;">Production Manager</small>
                     </div>
                 </div>
             </div>
