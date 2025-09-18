@@ -13,20 +13,25 @@ return new class extends Migration
     {
         Schema::create('production_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('job_number');
-            $table->string('product_name');
-            $table->string('project_name');
-            $table->string('customer');
-            $table->integer('no_of_structures');
-            $table->integer('no_of_workers');
-            $table->integer('feeders');
-            $table->integer('main');
-            $table->integer('tie');
-            $table->date('request_date');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->date('etd');  // Estimated Time of Departure
-            $table->date('atd');  // Actual Time of Departure
+            $table->string('job_number', 100)->nullable();
+            $table->string('po_number', 100)->unique();
+            $table->unsignedBigInteger('product_name_id');//FK:products.id
+            $table->string('project_name')->nullable();
+            $table->string('customer');//customer name
+            $table->string('customer_contact_email');
+            $table->string('customer_contact_phone', 20);
+            $table->enum('status', ['pending', 'approved', 'shifted', 'delivered', 'cancelled'])->default('pending');
+            $table->text('actions')->nullable();
+            $table->integer('no_of_structures')->nullable();
+            $table->integer('no_of_workers')->nullable();
+            $table->integer('feeders')->nullable();
+            $table->integer('main')->nullable();
+            $table->integer('tie')->nullable();
+            $table->date('request_date')->nullable();//order date
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->date('etd')->nullable();  // Estimated Time of Departure
+            $table->date('atd')->nullable();  // Actual Time of Departure
             $table->timestamps();
         });
     }
