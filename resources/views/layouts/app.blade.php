@@ -103,6 +103,8 @@
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             min-height: 800px;
+            position: relative;
+            bottom:43px;
         }
 
         .analytics {
