@@ -88,45 +88,45 @@
                                                     <select id="product-select" class="form-control" name="product_name" id="product_name" required>
                                                         <option value="">-- Select Product --</option>
 
-                                                        <option value="1">MS100 Main Switch</option>
+                                                        <option value="MS100 Main Switch">MS100 Main Switch</option>
 
-                                                        <option value="2">MS250 Main Switch</option>
+                                                        <option value="MS250 Main Switch">MS250 Main Switch</option>
 
-                                                        <option value="3">TB125 Tie Breaker</option>
+                                                        <option value="TB125 Tie Breaker">TB125 Tie Breaker</option>
 
-                                                        <option value="4">TB160 Tie Breaker</option>
+                                                        <option value="TB160 Tie Breaker">TB160 Tie Breaker</option>
 
-                                                        <option value="5">DB Single Phase</option>
+                                                        <option value="DB Single Phase">DB Single Phase</option>
 
-                                                        <option value="6">DB Three Phase</option>
+                                                        <option value="DB Three Phase">DB Three Phase</option>
 
-                                                        <option value="7">Starter Panel</option>
+                                                        <option value="Starter Panel">Starter Panel</option>
 
-                                                        <option value="8">PLC Control Panel</option>
+                                                        <option value="PLC Control Panel">PLC Control Panel</option>
 
-                                                        <option value="9">Copper Busbar 100A</option>
+                                                        <option value="Copper Busbar 100A">Copper Busbar 100A</option>
 
-                                                        <option value="10">Aluminum Busbar 200A</option>
+                                                        <option value="Aluminum Busbar 200A">Aluminum Busbar 200A</option>
 
-                                                        <option value="11">Relay 230V</option>
+                                                        <option value="Relay 230V">Relay 230V</option>
 
-                                                        <option value="12">Contactor 40A</option>
+                                                        <option value="Contactor 40A">Contactor 40A</option>
 
-                                                        <option value="13">Cable Lug</option>
+                                                        <option value="Cable Lug">Cable Lug</option>
 
-                                                        <option value="14">PVC Trunking</option>
+                                                        <option value="PVC Trunking">PVC Trunking</option>
 
-                                                        <option value="15">1kVA Transformer</option>
+                                                        <option value="1kVA Transformer">1kVA Transformer</option>
 
-                                                        <option value="16">5kVA Transformer</option>
+                                                        <option value="5kVA Transformer">5kVA Transformer</option>
 
-                                                        <option value="17">MCB 10A</option>
+                                                        <option value="MCB 10A">MCB 10A</option>
 
-                                                        <option value="18">RCCB 63A</option>
+                                                        <option value="RCCB 63A">RCCB 63A</option>
 
-                                                        <option value="19">Digital Voltmeter</option>
+                                                        <option value="Digital Voltmeter">Digital Voltmeter</option>
 
-                                                        <option value="20">Energy Meter</option>
+                                                        <option value="Energy Meter">Energy Meter</option>
 
                                                     </select>
                                                 </div>
