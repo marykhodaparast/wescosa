@@ -25,7 +25,7 @@
                     <img src="{{ asset('user1.jpg') }}" alt="Profile Image">
                     <div class="profile-text">
                         <h6>{{ auth()->user()->name }}</h6>
-                        <p>Production Manager</p>
+                        <p style="white-space:nowrap !important;">Production Manager</p>
                     </div>
                 </div>
             </div>
@@ -571,6 +571,8 @@
         function validateATD() {
             const atdInput = document.getElementById('atd');
             const atd = new Date(atdInput.value);
+            const etdInput = document.getElementById('etd');
+            const etd = new Date(etdInput.value);
             const startdateInput = document.getElementById('start_date');
             const start_date = new Date(startdateInput.value);
             const errorMsg = document.getElementById('error-msgatd');
@@ -580,11 +582,17 @@
                 // atdInput.classList.add('is-invalid');
                 return true;
             }
+            if(atd <= etd) {
+                errorMsg.textContent = 'ATD cannot be before ETD.';
+                atdInput.classList.add('is-invalid');
+                return false;
+            }
             if (atd < start_date) {
                 errorMsg.textContent = 'ATD cannot be before Start Date.';
                 atdInput.classList.add('is-invalid');
                 return false;
             }
+
             atdInput.classList.remove('is-invalid');
             return true;
         }
