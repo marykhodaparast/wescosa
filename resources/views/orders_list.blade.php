@@ -58,9 +58,10 @@
                                 @foreach($data as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td><a href="/orders/single_order/{{ $item->id }}/" class="" style="text-decoration: none;color: black;">PO-{{ 1000 + $item->id }}</a></td>
+                                    <td><a href="/orders/single_order/{{ $item->id }}/" class="" style="text-decoration: none;color: black;">{{ $item->po_number ? $item->po_number : 'PO-' . (1000 + $item->id)}}</a></td>
                                     <td>
-                                        @switch($item->product_name)
+                                        {{ $item->product_name }}
+                                        {{-- @switch($item->product_name)
                                         @case('1')
                                         MS100 Main Switch
                                         @break
@@ -121,7 +122,7 @@
                                         @case('20')
                                         Energy Meter
                                         @break
-                                        @endswitch
+                                        @endswitch --}}
                                     </td>
                                     <td>{{ $item->customer }}</td>
                                     <td>{{ \Carbon\Carbon::parse($item->request_date)->format('M. j, Y') }}</td>

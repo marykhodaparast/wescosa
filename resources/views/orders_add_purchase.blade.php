@@ -38,7 +38,8 @@
                 <span class="upload-label">Upload Bulk Purchase Orders</span>
 
                 <!-- Upload Form -->
-                <form method="post" enctype="multipart/form-data" action="/orders/upload_purchase_orders">
+                <form method="post" enctype="multipart/form-data" action="{{ route('purchase-orders.import') }}">
+                    @csrf
                     <input type="hidden" name="csrfmiddlewaretoken" value="TrHkIpbC4SgGFPnWim1f2caoSOR9EktZ3dvyz5sg5ieN4uKivLTPvOMexPJFu0lT">
 
                     <!-- Hidden File Input -->

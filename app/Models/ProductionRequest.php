@@ -8,6 +8,7 @@ class ProductionRequest extends Model
 {
     protected $fillable = [
         'job_number',
+        'po_number',
         'product_name',
         'project_name',
         'customer',

@@ -6,6 +6,8 @@ use App\Models\ProductionRequest;
 use App\Http\Requests\StoreProductionRequest;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
+use App\Imports\PurchaseOrderImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class ProductionController extends Controller
@@ -60,6 +62,17 @@ class ProductionController extends Controller
         return redirect()->back()->with('success', 'Production request created successfully.');
     }
 
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        Excel::import(new PurchaseOrderImport, $request->file('file'));
+
+        return back()->with('success', 'Excel file imported successfully.');
+    }
+
     public function generateQR($id)
     {
         try {
@@ -89,6 +102,6 @@ class ProductionController extends Controller
             ], 500);
         }
 
-        
+
     }
 }

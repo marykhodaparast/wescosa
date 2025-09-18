@@ -16,6 +16,8 @@ Route::get('/orders/add_purchase/', function () {
     return view('orders_add_purchase');
 })->middleware(['auth', 'verified'])->name('orders_add_purchase');
 
+Route::post('/purchase-orders/import', [ProductionController::class, 'import'])->name('purchase-orders.import');
+
 Route::get('/orders/po_list/', [ProductionController::class, 'index'])->name('orders_list');
 
 Route::get('/orders/generate-qr/{id}', [ProductionController::class, 'generateQR']);
