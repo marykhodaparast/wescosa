@@ -14,14 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password123'),
-        ]);
-
+        $found = User::where('name', 'admin')->where('email', 'admin@example.com')->first();
+        if (!$found) {
+            User::factory()->firstOrCreate([
+                'name' => 'admin',
+                'email' => 'admin@example.com',
+                'password' => bcrypt('password123'),
+            ]);
+        }
 
         $this->call(CategorySeeder::class);
         $this->call(ProductSeeder::class);

@@ -41,7 +41,8 @@ class ProductSeeder extends Seeder
             $found = DB::table('products')->where('category_id', $product["category_id"])->where('name', $product["name"])->where('description', $product["description"])->first();
 
             if (!$found) {
-                DB::table('products')->create([
+                DB::table('products')->insert([
+                    'category_id' => $product['category_id'],
                     'name' => $product['name'],
                     'description' => $product['description'],
                     'price'  => $product['price'],
