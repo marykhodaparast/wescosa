@@ -61,68 +61,6 @@
                                     <td><a href="/orders/single_order/{{ $item->id }}/" class="" style="text-decoration: none;color: black;">{{ $item->po_number ? $item->po_number : 'PO-' . (1000 + $item->id)}}</a></td>
                                     <td>
                                         {{ $item->product_name }}
-                                        {{-- @switch($item->product_name)
-                                        @case('1')
-                                        MS100 Main Switch
-                                        @break
-                                        @case('2')
-                                        MS250 Main Switch
-                                        @break
-                                        @case('3')
-                                        TB125 Tie Breaker
-                                        @break
-                                        @case('4')
-                                        TB160 Tie Breaker
-                                        @break
-                                        @case('5')
-                                        DB Single Phase
-                                        @break
-                                        @case('6')
-                                        DB Three Phase
-                                        @break
-                                        @case('7')
-                                        Starter Panel
-                                        @break
-                                        @case('8')
-                                        PLC Control Panel
-                                        @break
-                                        @case('9')
-                                        Copper Busbar 100A
-                                        @break
-                                        @case('10')
-                                        Aluminum Busbar 200A
-                                        @break
-                                        @case('11')
-                                        Relay 230V
-                                        @break
-                                        @case('12')
-                                        Contactor 40A
-                                        @break
-                                        @case('13')
-                                        Cable Lug
-                                        @break
-                                        @case('14')
-                                        PVC Trunking
-                                        @break
-                                        @case('15')
-                                        1kVA Transformer
-                                        @break
-                                        @case('16')
-                                        5kVA Transformer
-                                        @break
-                                        @case('17')
-                                        MCB 10A
-                                        @break
-                                        @case('18')
-                                        RCCB 63A
-                                        @break
-                                        @case('19')
-                                        Digital Voltmeter
-                                        @break
-                                        @case('20')
-                                        Energy Meter
-                                        @break
-                                        @endswitch --}}
                                     </td>
                                     <td>{{ $item->customer }}</td>
                                     <td>{{ \Carbon\Carbon::parse($item->request_date)->format('M. j, Y') }}</td>

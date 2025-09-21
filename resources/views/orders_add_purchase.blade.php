@@ -8,11 +8,11 @@
 
     <main class="col-md-10 p-4 content">
 
-        @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
 
         <!-- Top Bar (User Info) -->
@@ -40,13 +40,16 @@
                 <!-- Upload Form -->
                 <form method="post" enctype="multipart/form-data" action="{{ route('purchase-orders.import') }}">
                     @csrf
-                    <input type="hidden" name="csrfmiddlewaretoken" value="TrHkIpbC4SgGFPnWim1f2caoSOR9EktZ3dvyz5sg5ieN4uKivLTPvOMexPJFu0lT">
+                    <input type="hidden" name="csrfmiddlewaretoken"
+                        value="TrHkIpbC4SgGFPnWim1f2caoSOR9EktZ3dvyz5sg5ieN4uKivLTPvOMexPJFu0lT">
 
                     <!-- Hidden File Input -->
-                    <input type="file" name="file" id="excelUpload" accept=".xls,.xlsx" style="display: none;" onchange="this.form.submit();" />
+                    <input type="file" name="file" id="excelUpload" accept=".xls,.xlsx" style="display: none;"
+                        onchange="this.form.submit();" />
 
                     <!-- Custom Upload Button -->
-                    <button type="button" onclick="document.getElementById('excelUpload').click();" class="upload-button">
+                    <button type="button" onclick="document.getElementById('excelUpload').click();"
+                        class="upload-button">
                         Upload File(s)
                     </button>
                 </form>
@@ -62,9 +65,11 @@
 
 
         </div>
-        <form class="form" method="post" action="{{ route('orders_add_purchase.store') }}" id="purchaseForm" onsubmit="return validateAddPurchaseForm();">
+        <form class="form" method="post" action="{{ route('orders_add_purchase.store') }}" id="purchaseForm"
+            onsubmit="return validateAddPurchaseForm();">
             @csrf
-            <input type="hidden" name="csrfmiddlewaretoken" value="TrHkIpbC4SgGFPnWim1f2caoSOR9EktZ3dvyz5sg5ieN4uKivLTPvOMexPJFu0lT">
+            <input type="hidden" name="csrfmiddlewaretoken"
+                value="TrHkIpbC4SgGFPnWim1f2caoSOR9EktZ3dvyz5sg5ieN4uKivLTPvOMexPJFu0lT">
 
             <div class="row">
                 <section id="multiple-column-form">
@@ -78,56 +83,22 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="job_number">Job Number</label>
-                                                    <input type="text" id="job_number" class="form-control" placeholder="Job Number" name="job_number">
+                                                    <input type="text" id="job_number" class="form-control"
+                                                        placeholder="Job Number" name="job_number">
                                                     <p class="error-msg" id="error-msgjob"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="product-select">Product</label>
-                                                    <select id="product-select" class="form-control" name="product_name" id="product_name" required>
+                                                    <select id="product-select" class="form-control" name="product_name"
+                                                        id="product_name" required>
                                                         <option value="">-- Select Product --</option>
 
-                                                        <option value="MS100 Main Switch">MS100 Main Switch</option>
-
-                                                        <option value="MS250 Main Switch">MS250 Main Switch</option>
-
-                                                        <option value="TB125 Tie Breaker">TB125 Tie Breaker</option>
-
-                                                        <option value="TB160 Tie Breaker">TB160 Tie Breaker</option>
-
-                                                        <option value="DB Single Phase">DB Single Phase</option>
-
-                                                        <option value="DB Three Phase">DB Three Phase</option>
-
-                                                        <option value="Starter Panel">Starter Panel</option>
-
-                                                        <option value="PLC Control Panel">PLC Control Panel</option>
-
-                                                        <option value="Copper Busbar 100A">Copper Busbar 100A</option>
-
-                                                        <option value="Aluminum Busbar 200A">Aluminum Busbar 200A</option>
-
-                                                        <option value="Relay 230V">Relay 230V</option>
-
-                                                        <option value="Contactor 40A">Contactor 40A</option>
-
-                                                        <option value="Cable Lug">Cable Lug</option>
-
-                                                        <option value="PVC Trunking">PVC Trunking</option>
-
-                                                        <option value="1kVA Transformer">1kVA Transformer</option>
-
-                                                        <option value="5kVA Transformer">5kVA Transformer</option>
-
-                                                        <option value="MCB 10A">MCB 10A</option>
-
-                                                        <option value="RCCB 63A">RCCB 63A</option>
-
-                                                        <option value="Digital Voltmeter">Digital Voltmeter</option>
-
-                                                        <option value="Energy Meter">Energy Meter</option>
-
+                                                        @foreach ($products as $product)
+                                                            <option value="{{ $product->id }}">{{ $product->name }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -135,84 +106,101 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="city-column">Project Name</label>
-                                                    <input type="text" id="project_name" class="form-control" placeholder="Project Name" name="project_name">
+                                                    <input type="text" id="project_name" class="form-control"
+                                                        placeholder="Project Name" name="project_name">
                                                 </div>
                                                 <p class="error-msg" id="error-msgproject"></p>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="country-floating">Customer</label>
-                                                    <input type="text" id="customer" class="form-control" name="customer" placeholder="Customer">
+                                                    <input type="text" id="customer" class="form-control"
+                                                        name="customer" placeholder="Customer">
                                                     <p class="error-msg" id="error-msgcustomer"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="company-column">No. of Structures</label>
-                                                    <input type="number" min="0" max="9999" id="no_of_structures" class="form-control" name="no_of_structures" placeholder="No. of Structures">
+                                                    <input type="number" min="0" max="9999"
+                                                        id="no_of_structures" class="form-control"
+                                                        name="no_of_structures" placeholder="No. of Structures">
                                                     <p class="error-msg" id="error-msgstructures"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="first-name-column">No. of Workers</label>
-                                                    <input type="number" min="0" max="9999" id="no_of_workers" class="form-control" placeholder="No. of Workers" name="no_of_workers">
+                                                    <input type="number" min="0" max="9999"
+                                                        id="no_of_workers" class="form-control"
+                                                        placeholder="No. of Workers" name="no_of_workers">
                                                     <p class="error-msg" id="error-msgworkers"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="last-name-column">Feeders</label>
-                                                    <input type="number" min="0" max="9999" id="feeders" class="form-control" placeholder="Feeders" name="feeders">
+                                                    <input type="number" min="0" max="9999"
+                                                        id="feeders" class="form-control" placeholder="Feeders"
+                                                        name="feeders">
                                                     <p class="error-msg" id="error-msgfeeders"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="city-column">Main</label>
-                                                    <input type="number" min="0" max="9999" id="main" class="form-control" placeholder="Main" name="main">
+                                                    <input type="number" min="0" max="9999"
+                                                        id="main" class="form-control" placeholder="Main"
+                                                        name="main">
                                                     <p class="error-msg" id="error-msgmain"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="country-floating">Tie</label>
-                                                    <input type="number" min="0" max="9999" id="tie" class="form-control" name="tie" placeholder="Tie">
+                                                    <input type="number" min="0" max="9999"
+                                                        id="tie" class="form-control" name="tie"
+                                                        placeholder="Tie">
                                                     <p class="error-msg" id="error-msgtie"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="country-floating">Request Date</label>
-                                                    <input type="date" id="request_date" class="form-control" name="request_date" placeholder="Request Date">
+                                                    <input type="date" id="request_date" class="form-control"
+                                                        name="request_date" placeholder="Request Date">
                                                     <p class="error-msg" id="error-msgrequestdate"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="company-column">Start Date</label>
-                                                    <input type="date" id="start_date" class="form-control" name="start_date" placeholder="Start Date">
+                                                    <input type="date" id="start_date" class="form-control"
+                                                        name="start_date" placeholder="Start Date">
                                                     <p class="error-msg" id="error-msgstartdate"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="company-column">End Date</label>
-                                                    <input type="date" id="end_date" class="form-control" name="end_date" placeholder="End Date">
+                                                    <input type="date" id="end_date" class="form-control"
+                                                        name="end_date" placeholder="End Date">
                                                     <p class="error-msg" id="error-msgenddate"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="company-column">ETD</label>
-                                                    <input type="date" id="etd" class="form-control" name="etd" placeholder="ETD">
+                                                    <input type="date" id="etd" class="form-control"
+                                                        name="etd" placeholder="ETD">
                                                     <p class="error-msg" id="error-msgetd"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="company-column">ATD</label>
-                                                    <input type="date" id="atd" class="form-control" name="atd" placeholder="ATD">
+                                                    <input type="date" id="atd" class="form-control"
+                                                        name="atd" placeholder="ATD">
                                                     <p class="error-msg" id="error-msgatd"></p>
                                                 </div>
                                             </div>
@@ -243,21 +231,21 @@
     <script>
         const ctx1 = document.getElementById('userChart').getContext('2d');
         const userChart = new Chart(ctx1, {
-            type: 'bar'
-            , data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June']
-                , datasets: [{
-                    label: 'New Users'
-                    , data: [120, 190, 300, 500, 200, 300]
-                    , backgroundColor: '#3030b7'
-                    , borderColor: '#2c3e50',
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                datasets: [{
+                    label: 'New Users',
+                    data: [120, 190, 300, 500, 200, 300],
+                    backgroundColor: '#3030b7',
+                    borderColor: '#2c3e50',
                     //rgba(54, 162, 235, 1)
                     borderWidth: 1
                 }]
-            }
-            , options: {
-                responsive: true
-                , scales: {
+            },
+            options: {
+                responsive: true,
+                scales: {
                     y: {
                         beginAtZero: true
                     }
@@ -267,22 +255,22 @@
 
         const ctx2 = document.getElementById('productionGrowthChart').getContext('2d');
         const productionGrowthChart = new Chart(ctx2, {
-            type: 'line'
-            , data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June']
-                , datasets: [{
-                    label: 'Production Growth'
-                    , data: [100, 150, 250, 400, 450, 600]
-                    , backgroundColor: '#6767f6',
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                datasets: [{
+                    label: 'Production Growth',
+                    data: [100, 150, 250, 400, 450, 600],
+                    backgroundColor: '#6767f6',
                     // borderColor: 'rgba(0, 123, 255, 1)',
-                    borderColor: '#2c3e50'
-                    , borderWidth: 2
-                    , fill: true
+                    borderColor: '#2c3e50',
+                    borderWidth: 2,
+                    fill: true
                 }]
-            }
-            , options: {
-                responsive: true
-                , scales: {
+            },
+            options: {
+                responsive: true,
+                scales: {
                     y: {
                         beginAtZero: true
                     }
@@ -311,10 +299,10 @@
         }
 
         updateProgress();
-
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
     <script>
         //   document.addEventListener('DOMContentLoaded', function () {
         //     const toastElList = [].slice.call(document.querySelectorAll('.toast'));
@@ -323,22 +311,20 @@
         //       toast.show(); // This line triggers the toast
         //     });
         //   });
-
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.toast').forEach(function(toastEl) {
                 // Create toast instance
                 const toast = new bootstrap.Toast(toastEl, {
-                    autohide: true
-                    , delay: 4000
+                    autohide: true,
+                    delay: 4000
                 });
 
                 // Show the toast
                 toast.show();
             });
         });
-
     </script>
 
 
@@ -583,7 +569,7 @@
                 // atdInput.classList.add('is-invalid');
                 return true;
             }
-            if(atd <= etd) {
+            if (atd <= etd) {
                 errorMsg.textContent = 'ATD cannot be before ETD.';
                 atdInput.classList.add('is-invalid');
                 return false;
@@ -651,10 +637,11 @@
             ATDInput.addEventListener('input', validateATD);
 
         });
-
     </script>
     <!-- Bootstrap JS and Icons -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script>
@@ -665,7 +652,6 @@
                 this.value = ''; // Clear the input
             }
         });
-
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -676,7 +662,6 @@
                 toast.show();
             });
         });
-
     </script>
 
 </x-app-layout>

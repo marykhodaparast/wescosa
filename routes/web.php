@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductionController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,7 +14,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/orders/add_purchase/', function () {
-    return view('orders_add_purchase');
+    $products = Product::all();
+    return view('orders_add_purchase')->with([
+        'products' => $products
+    ]);
 })->middleware(['auth', 'verified'])->name('orders_add_purchase');
 
 Route::post('/purchase-orders/import', [ProductionController::class, 'import'])->name('purchase-orders.import');
