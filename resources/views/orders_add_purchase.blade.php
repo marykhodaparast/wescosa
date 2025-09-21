@@ -91,8 +91,8 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="product-select">Product</label>
-                                                    <select id="product-select" class="form-control" name="product_name"
-                                                        id="product_name" required>
+                                                    <select id="product-select" class="form-control" name="product_name_id"
+                                                        id="product_name_id" required>
                                                         <option value="">-- Select Product --</option>
 
                                                         @foreach ($products as $product)

@@ -17,7 +17,7 @@ class StoreProductionRequest extends FormRequest
     {
         return [
             'job_number' => ['required', 'string', 'max:255'],
-            'product_name' => ['required', 'string', 'max:255'],
+            'product_name_id' => ['required', 'exists:products,id'],
             'project_name' => ['required', 'string', 'max:255'],
             'customer' => ['required', 'string', 'max:255'],
             'no_of_structures' => ['required', 'integer', 'min:1'],

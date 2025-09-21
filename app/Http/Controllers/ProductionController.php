@@ -54,6 +54,11 @@ class ProductionController extends Controller
         // Validate the request
         $validatedData = $request->validated();
 
+        if (!isset($validatedData['po_number'])) {
+            $maxId = ProductionRequest::max('id') ?? 0;
+            $poNumber = 'PO-' . (1000 + $maxId + 1);
+            $validatedData = array_merge($validatedData, ['po_number' => $poNumber]);
+        }
 
         // Create a new production request
         ProductionRequest::create($validatedData);
@@ -101,7 +106,5 @@ class ProductionController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
-
-
     }
 }
