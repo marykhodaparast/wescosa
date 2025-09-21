@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\ProductionRequest;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Date;
+use App\Models\Product;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Carbon\Carbon;
 class PurchaseOrderImport implements ToModel, WithStartRow
@@ -29,7 +30,7 @@ class PurchaseOrderImport implements ToModel, WithStartRow
         return new ProductionRequest([
             'job_number'       => $row[1] ?? null,
             'po_number'        => $row[2] ?? null,
-            'product_name'     => $row[3] ?? null,
+            'product_name_id'     => Product::where('name', $row[3])->value('id') ?? 0,
             'project_name'     => $row[12] ?? null,
             'customer'         => $row[4] ?? null,
             // 'no_of_structures' => $row['no_of_structures'] ?? null,
