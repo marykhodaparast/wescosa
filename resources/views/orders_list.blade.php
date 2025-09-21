@@ -60,7 +60,7 @@
                                     <td>{{ $item->id }}</td>
                                     <td><a href="/orders/single_order/{{ $item->id }}/" class="" style="text-decoration: none;color: black;">{{ $item->po_number ? $item->po_number : 'PO-' . (1000 + $item->id)}}</a></td>
                                     <td>
-                                        {{ $item->product_name }}
+                                        {{ $item?->product?->name }}
                                     </td>
                                     <td>{{ $item->customer }}</td>
                                     <td>{{ \Carbon\Carbon::parse($item->request_date)->format('M. j, Y') }}</td>
