@@ -95,17 +95,18 @@ class ProductionController extends Controller
 
         $product = Product::findOrFail($request->input('product_id'));
 
-        $product_child_element = ProductChildElement::create([
-            'product_id' => $request->input('product_id'),
-            'name' => $product->name,
-            'description' => $product->description,
-            'price' => $product->price,
-        ]);
-
         $production_request_child_element = ProductionRequestChildElement::where('po_id', $productionRequest->id)
             ->where('child_element_id', $request->input('product_child_element_id'))
             ->first();
         if (!$production_request_child_element) {
+
+            $product_child_element = ProductChildElement::create([
+                'product_id' => $request->input('product_id'),
+                'name' => $product->name,
+                'description' => $product->description,
+                'price' => $product->price,
+            ]);
+            
             ProductionRequestChildElement::create([
                 'po_id' => $productionRequest->id,
                 'child_element_id' => $request->input('product_child_element_id') != 0 ? $request->input('product_child_element_id') : $product_child_element->id,
