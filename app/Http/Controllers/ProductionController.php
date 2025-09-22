@@ -28,7 +28,7 @@ class ProductionController extends Controller
                 $idToSearch = $poInput - 1000;  // Reverse logic → id = 1001 - 1000 = 1
 
                 // Filter by id
-                $query->where('id', $idToSearch);
+                $query->where('id', $idToSearch)->orWhere('po_number', 'PO-' . $poInput);
             }
         }
 
