@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductionRequest;
+use App\Models\ProductionRequestChildElement;
 use App\Http\Requests\StoreProductionRequest;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 use App\Imports\PurchaseOrderImport;
+use App\Models\ProductChildElement;
+use App\Models\Product;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
@@ -65,6 +68,74 @@ class ProductionController extends Controller
 
         // Redirect or return a response
         return redirect()->back()->with('success', 'Production request created successfully.');
+    }
+
+    public function update_eta_ata(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'order_id' => 'required|integer|exists:production_requests,id',
+            'product_child_element_id' => 'required|integer',
+            'child-name' => 'required|string|max:255',
+            'product_id' => 'required|integer|exists:products,id',
+            'child-qty' => 'required|integer|min:1',
+            'child-unit-price' => 'required|numeric|min:0',
+            'child-total-price' => 'required|numeric|min:0',
+            'child-image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'child-date' => 'required|date', //ordered date
+            'inspection' => 'required|string|max:1000',
+            'pm_remarks' => 'required|string|max:1000',
+            'eta' => 'nullable|date|before_or_equal:ata',
+            'ata' => 'nullable|date|after_or_equal:eta',
+        ]);
+
+        $order_id = $request->input('order_id');
+
+        $productionRequest = ProductionRequest::find($order_id);
+
+        $product = Product::findOrFail($request->input('product_id'));
+
+        $product_child_element = ProductChildElement::create([
+            'product_id' => $request->input('product_id'),
+            'name' => $product->name,
+            'description' => $product->description,
+            'price' => $product->price,
+        ]);
+
+        $production_request_child_element = ProductionRequestChildElement::where('po_id', $productionRequest->id)
+            ->where('child_element_id', $request->input('product_child_element_id'))
+            ->first();
+        if (!$production_request_child_element) {
+            ProductionRequestChildElement::create([
+                'po_id' => $productionRequest->id,
+                'child_element_id' => $request->input('product_child_element_id') != 0 ? $request->input('product_child_element_id') : $product_child_element->id,
+                'name' => $request->input('child-name'),
+                'quantity' => $request->input('child-qty'),
+                'unit_price' => $request->input('child-unit-price'),
+                'total_price' => $request->input('child-total-price'),
+                'image' => $request->file('child-image') ? $request->file('child-image')->store('child_images/' . $order_id . '/' . $product_child_element->id, 'public') : null,
+                'date_order' => $request->input('child-date'),
+                'inspection_remarks' => $request->input('inspection'),
+                'production_manager_remarks' => $request->input('pm_remarks'),
+                'eta_child' => $request->input('eta'),
+                'ata_child' => $request->input('ata'),
+            ]);
+        } else {
+            $production_request_child_element->update([
+                'name' => $request->input('child-name'),
+                'quantity' => $request->input('child-qty'),
+                'unit_price' => $request->input('child-unit-price'),
+                'total_price' => $request->input('child-total-price'),
+                'image' => $request->file('child-image') ? $request->file('child-image')->store('child_images/' . $order_id . '/' . $request->input('child-item-id'), 'public') : $production_request_child_element->image,
+                'date_order' => $request->input('child-date'),
+                'inspection_remarks' => $request->input('inspection'),
+                'production_manager_remarks' => $request->input('pm_remarks'),
+                'eta_child' => $request->input('eta'),
+                'ata_child' => $request->input('ata'),
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'All child elements data updated successfully.');
     }
 
     public function import(Request $request)

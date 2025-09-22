@@ -180,7 +180,8 @@
         }
 
         /* Sidebar Modal */
-        .modal-right {
+        .modal-right-one,
+        .modal-right-two {
             position: fixed;
             top: 0;
             right: -300px;
@@ -194,11 +195,13 @@
             z-index: 1000;
         }
 
-        .modal-right.show {
+        .modal-right-one.show,
+        .modal-right-two.show {
             right: 0;
         }
 
-        .overlay {
+        .overlay-one,
+        .overlay-two {
             position: fixed;
             top: 0;
             left: 0;
@@ -209,11 +212,13 @@
             z-index: 999;
         }
 
-        .overlay.show {
+        .overlay-one.show,
+        .overlay-two.show {
             display: block;
         }
 
-        .close {
+        .close-one,
+        .close-two {
             display: inline;
             margin-bottom: 20px;
             margin-left: 15px;
@@ -270,6 +275,13 @@
                 </div>
             </div>
         </div>
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <!-- Dashboard Content -->
         <div class="row">
@@ -461,27 +473,46 @@
 
 
 
-        <div class="overlay"></div>
-        <div class="modal-right">
+        <div class="overlay-one"></div>
+        <div class="modal-right-one">
+            @php
+                $product_child_element_id =
+                    App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id ?? 0;
+
+                $production_request_child_element = App\Models\ProductionRequestChildElement::where('po_id', $data->id)
+                    ->where('child_element_id', $product_child_element_id)
+                    ->first();
+
+            @endphp
             <!-- Form should not be inside .row unless you want grid columns inside -->
-            <form method="POST" action="/orders/update_eta_ata/" style="margin-top: 15px;">
+            <form method="POST" action="/orders/update_eta_ata/" style="margin-top: 15px;"
+                enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" class="form-control" name="item_id" id="child-item-id">
+                <input type="hidden" name="order_id" value="{{ $data->id }}">
+                <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
+                <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" class="form-control" name="item_id" id="child-item-id" value="0">
                 <div class="row">
                     <div class="col-8"> <span class="fs-6" id="child-name"><input type="text"
-                                value="Child Name"
-                                class="form-control" /></span>
+                                name="child-name" placeholder="Child Name"
+                                value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
                     </div>
 
                     <div class="col-4">
-                        <button type="button" class="close">X</button>
+                        <button type="button" class="close-one">X</button>
                     </div>
 
                 </div>
 
                 <div class="card">
                     <div class="card-image">
-                        <input type="file" class="form-control" style="font-size:0.7rem !important" />
+                        @if ($production_request_child_element && $production_request_child_element->image)
+                            <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
+                                alt="Child Image" width="258px" height="120px">
+                        @else
+                            <input type="file" class="form-control" id="child-image" name="child-image"
+                                style="font-size:0.7rem !important" />
+                        @endif
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
                 </div>
@@ -490,17 +521,23 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span id="child-qty" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                value="0" class="form-control" style="width:40px !important;font-size:0.7rem !important" /></span>
+                                name="child-qty" value="{{ $production_request_child_element?->quantity }}"
+                                class="form-control"
+                                style="width:40px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                value="0" class="form-control" style="width:40px !important;font-size:0.7rem !important" /></span>
+                                name="child-unit-price" value="{{ $production_request_child_element?->unit_price }}"
+                                class="form-control"
+                                style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                value="0" class="form-control" style="width:40px !important;font-size:0.7rem !important" /></span>
+                                name="child-total-price"
+                                value="{{ $production_request_child_element?->total_price }}" class="form-control"
+                                style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                 </div>
 
@@ -508,7 +545,125 @@
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
                         <span id="child-date" style="font-size: 10px !important;"><input type="date"
-                                class="form-control" style="font-size: 0.7rem !important;" /></span>
+                                name="child-date" class="form-control"
+                                value="{{ $production_request_child_element?->date_order }}"
+                                style="font-size: 0.7rem !important;" />
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group mt-2 mb-2">
+                    <label style="font-size: 12px;">ETA</label>
+                    <input type="date" class="form-control" id="eta" name="eta"
+                        value="{{ $production_request_child_element?->eta_child }}" style="font-size: 0.7rem;">
+                </div>
+
+                <div class="form-group mb-2">
+                    <label style="font-size: 12px;">ATA</label>
+                    <input type="date" class="form-control" id="ata" name="ata"
+                        value="{{ $production_request_child_element?->ata_child }}" style="font-size: 0.7rem;">
+                </div>
+
+                <div class="form-group mb-2">
+                    <label style="font-size: 12px;">Inspection Remarks</label>
+                    <input type="text" class="form-control" id="inspection" name="inspection"
+                        value="{{ $production_request_child_element?->inspection_remarks }}"
+                        style="font-size: 0.7rem;">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label style="font-size: 12px;">Production Manager Remarks</label>
+                    <input type="text" class="form-control" id="pm-remarks" name="pm_remarks"
+                        value="{{ $production_request_child_element?->production_manager_remarks }}"
+                        style="font-size: 0.7rem;">
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-2" id="saveBtn1" disabled>Save Changes</button>
+                <button type="button" id="qr-btn" class="btn btn-success mt-2"
+                    onclick="handleQRClick()">Generate QR</button>
+            </form>
+        </div>
+
+
+        <div class="overlay-two"></div>
+        <div class="modal-right-two">
+            @php
+
+                $product_child_element_id =
+                    App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id + 1 ?? 0;
+
+                $production_request_child_element = App\Models\ProductionRequestChildElement::where('po_id', $data->id)
+                    ->where('child_element_id', $product_child_element_id)
+                    ->first();
+
+            @endphp
+            <!-- Form should not be inside .row unless you want grid columns inside -->
+            <form method="POST" action="/orders/update_eta_ata/" style="margin-top: 15px;"
+                enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" name="order_id" value="{{ $data->id }}">
+                <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
+                <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" class="form-control" name="item_id" id="child-item-id" value="0">
+                <div class="row">
+                    <div class="col-8"> <span class="fs-6" id="child-name"><input type="text"
+                                name="child-name" placeholder="Child Name"
+                                value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
+                    </div>
+
+                    <div class="col-4">
+                        <button type="button" class="close-two">X</button>
+                    </div>
+
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        @if ($production_request_child_element && $production_request_child_element->image)
+                            <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
+                                alt="Child Image" width="258px" height="120px">
+                        @elseif($production_request_child_element && $production_request_child_element->image === null)
+                            <img id="child-image" src="" alt="Circuit diagram" height="120px">
+                        @else
+                            <input type="file" class="form-control" id="child-image" name="child-image"
+                                style="font-size:0.7rem !important" />
+                        @endif
+                        {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <span style="font-size: 10px;">QUANTITY</span><br>
+                        <span id="child-qty" style="font-size: 10px;font-weight: 700;"><input type="text"
+                                name="child-qty" value="{{ $production_request_child_element?->quantity }}"
+                                class="form-control"
+                                style="width:40px !important;font-size:0.7rem !important" /></span>
+                    </div>
+                    <div class="col-md-4">
+                        <span style="font-size: 10px;">UNIT PRICE</span><br>
+                        <span id="child-unit-price" style="font-size: 10px;font-weight: 700;"><input type="text"
+                                name="child-unit-price" value="{{ $production_request_child_element?->unit_price }}"
+                                class="form-control"
+                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                    </div>
+                    <div class="col-md-4">
+                        <span style="font-size: 10px;">TOTAL PRICE</span><br>
+                        <span id="child-total-price" style="font-size: 10px;font-weight: 700;"><input type="text"
+                                name="child-total-price"
+                                value="{{ $production_request_child_element?->total_price }}" class="form-control"
+                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <span style="font-size: 10px;">ORDERED DATE</span><br>
+                        <span id="child-date" style="font-size: 10px !important;"><input type="date"
+                                name="child-date" class="form-control"
+                                value="{{ $production_request_child_element?->date_order }}"
+                                style="font-size: 0.7rem !important;" /></span>
                     </div>
                 </div>
 
@@ -517,28 +672,30 @@
                 <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
                     <input type="date" class="form-control" id="eta" name="eta"
-                        style="font-size: 0.7rem;">
+                        value="{{ $production_request_child_element?->eta_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">ATA</label>
                     <input type="date" class="form-control" id="ata" name="ata"
-                        style="font-size: 0.7rem;">
+                        value="{{ $production_request_child_element?->ata_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">Inspection Remarks</label>
                     <input type="text" class="form-control" id="inspection" name="inspection"
+                        value="{{ $production_request_child_element?->inspection_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-3">
                     <label style="font-size: 12px;">Production Manager Remarks</label>
                     <input type="text" class="form-control" id="pm-remarks" name="pm_remarks"
+                        value="{{ $production_request_child_element?->production_manager_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-2" id="saveBtn" disabled>Save Changes</button>
+                <button type="submit" class="btn btn-primary mt-2" id="saveBtn2" disabled>Save Changes</button>
                 <button type="button" id="qr-btn" class="btn btn-success mt-2"
                     onclick="handleQRClick()">Generate QR</button>
             </form>
@@ -764,9 +921,12 @@
     <script>
         // ✅ Main Logic to Load Sidebar Data
         document.addEventListener("DOMContentLoaded", function() {
-            const sidebar = document.querySelector(".modal-right");
-            const overlay = document.querySelector(".overlay");
-            const closeBtn = document.querySelector(".close");
+            let sidebar = document.querySelector(".modal-right-one");
+            let overlay = document.querySelector(".overlay-one");
+            let closeBtn = document.querySelector(".close-one");
+            let sidebar2 = document.querySelector(".modal-right-two");
+            let overlay2 = document.querySelector(".overlay-two");
+            let closeBtn2 = document.querySelector(".close-two");
 
             const childData = JSON.parse(document.getElementById("childJson").textContent);
 
@@ -779,7 +939,7 @@
                 six: 5
             };
 
-            document.querySelectorAll(".one, .two, .three, .four, .five, .six").forEach(item => {
+            document.querySelectorAll(".one").forEach(item => {
                 item.addEventListener("click", function() {
                     sidebar.classList.add("show");
                     overlay.classList.add("show");
@@ -835,14 +995,74 @@
                 sidebar.classList.remove("show");
                 overlay.classList.remove("show");
             });
+
+
+            document.querySelectorAll(".two").forEach(item => {
+                item.addEventListener("click", function() {
+                    sidebar2.classList.add("show");
+                    overlay2.classList.add("show");
+
+                    const selectedClass = Object.keys(classMap).find(cls => this.classList.contains(
+                        cls));
+                    const index = classMap[selectedClass];
+                    const child = childData[index];
+
+                    if (!child) {
+                        alert("Child not found");
+                        return;
+                    }
+
+                    // Store ID globally
+                    selectedChildId = child.id;
+                    qrAlreadyExists = !!child.qr_url;
+
+                    // Set QR button state
+                    const qrBtn = document.getElementById("qr-btn");
+                    if (qrAlreadyExists) {
+                        qrBtn.innerText = "View QR";
+                        qrBtn.dataset.qrUrl = child.qr_url;
+                    } else {
+                        qrBtn.innerText = "Generate QR";
+                        qrBtn.removeAttribute("data-qr-url");
+                    }
+
+                    // Fill modal fields
+                    /* document.getElementById("child-name").innerText = child.name;
+                    document.getElementById("child-qty").innerText = child.quantity;
+                    document.getElementById("child-unit-price").innerText = child.unit_price;
+                    document.getElementById("child-total-price").innerText = child.total_price;
+                    document.getElementById("child-date").innerText = child.ordered_date;
+                    document.getElementById("eta").value = child.eta;
+                    document.getElementById("ata").value = child.ata;
+                    document.getElementById("inspection").value = child.inspection;
+                    document.getElementById("pm-remarks").value = child.pm;
+                    document.getElementById("child-item-id").value = child.id;
+                    */
+                    document.getElementById("child-image").src = child.image ||
+                        "/static/images/no_image.png";
+                });
+            });
+
+            // Close Sidebar
+            closeBtn2.addEventListener("click", () => {
+                sidebar2.classList.remove("show");
+                overlay2.classList.remove("show");
+            });
+
+            overlay2.addEventListener("click", () => {
+                sidebar2.classList.remove("show");
+                overlay2.classList.remove("show");
+            });
+
+
         });
     </script>
 
     <script>
         // ✅ Enable Save button only if form changes
         document.addEventListener("DOMContentLoaded", function() {
-            const form = document.querySelector("#saveBtn").closest("form");
-            const saveBtn = document.getElementById("saveBtn");
+            const form = document.querySelector("#saveBtn1").closest("form");
+            const saveBtn = document.getElementById("saveBtn1");
 
 
             const initialValues = {};
@@ -860,6 +1080,31 @@
                     }
                 });
                 saveBtn.disabled = !changed;
+            });
+        });
+
+
+        // ✅ Enable Save button only if form changes
+        document.addEventListener("DOMContentLoaded", function() {
+            const form2 = document.querySelector("#saveBtn2").closest("form");
+            const saveBtn2 = document.getElementById("saveBtn2");
+
+
+            const initialValues = {};
+            Array.from(form2.elements).forEach(el => {
+                if (el.name) {
+                    initialValues[el.name] = el.value;
+                }
+            });
+
+            form2.addEventListener("input", () => {
+                let changed = false;
+                Array.from(form2.elements).forEach(el => {
+                    if (el.name && initialValues[el.name] !== el.value) {
+                        changed = true;
+                    }
+                });
+                saveBtn2.disabled = !changed;
             });
         });
     </script>

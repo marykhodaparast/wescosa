@@ -30,6 +30,8 @@ Route::get('/orders/single_order/{id}', [ProductionController::class, 'single_or
 
 Route::post('/orders/add_purchase', [ProductionController::class, 'store'])->name('orders_add_purchase.store');
 
+Route::post('/orders/update_eta_ata/', [ProductionController::class, 'update_eta_ata'])->name('update_eta_ata');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
