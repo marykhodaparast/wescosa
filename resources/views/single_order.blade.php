@@ -264,8 +264,8 @@
                 <div class="profile">
                     <img src="{{ asset('user1.jpg') }}" alt="Profile Image">
                     <div class="profile-text">
-                        <h6>{{ auth()?->user()?->name}}</h6>
-                        <p>Production Manager</p>
+                        <h6>{{ auth()?->user()?->name }}</h6>
+                        <p style="white-space: nowrap !important;">Production Manager</p>
                     </div>
                 </div>
             </div>
@@ -274,96 +274,17 @@
         <!-- Dashboard Content -->
         <div class="row">
             <div class="col-12 ps-5">
-                <h2 class="text-left" id="ponum">{{ $data->po_number ? $data->po_number : 'PO-' . (1000 + $data->id)}}</h2>
+                <h2 class="text-left" id="ponum">
+                    {{ $data->po_number ? $data->po_number : 'PO-' . (1000 + $data->id) }}</h2>
 
 
                 <div class="job-info">
                     <div class="row">
                         <div class="col-md-1"><small>Job No.</small><br><span
                                 class="bold-text">JOB-{{ $data->job_number }}</span></div>
-                        <div class="col-md-2"><small>Product</small><br><span class="bold-text">
-                                @switch($data->product_name)
-                                    @case('1')
-                                        MS100 Main Switch
-                                    @break
-
-                                    @case('2')
-                                        MS250 Main Switch
-                                    @break
-
-                                    @case('3')
-                                        TB125 Tie Breaker
-                                    @break
-
-                                    @case('4')
-                                        TB160 Tie Breaker
-                                    @break
-
-                                    @case('5')
-                                        DB Single Phase
-                                    @break
-
-                                    @case('6')
-                                        DB Three Phase
-                                    @break
-
-                                    @case('7')
-                                        Starter Panel
-                                    @break
-
-                                    @case('8')
-                                        PLC Control Panel
-                                    @break
-
-                                    @case('9')
-                                        Copper Busbar 100A
-                                    @break
-
-                                    @case('10')
-                                        Aluminum Busbar 200A
-                                    @break
-
-                                    @case('11')
-                                        Relay 230V
-                                    @break
-
-                                    @case('12')
-                                        Contactor 40A
-                                    @break
-
-                                    @case('13')
-                                        Cable Lug
-                                    @break
-
-                                    @case('14')
-                                        PVC Trunking
-                                    @break
-
-                                    @case('15')
-                                        1kVA Transformer
-                                    @break
-
-                                    @case('16')
-                                        5kVA Transformer
-                                    @break
-
-                                    @case('17')
-                                        MCB 10A
-                                    @break
-
-                                    @case('18')
-                                        RCCB 63A
-                                    @break
-
-                                    @case('19')
-                                        Digital Voltmeter
-                                    @break
-
-                                    @case('20')
-                                        Energy Meter
-                                    @break
-                                @endswitch
-
+                        <div class="col-md-2"><small>Product</small><br>
+                            <span class="bold-text">
+                                {{ $data?->product?->name }}
                             </span>
                         </div>
                         <div class="col-md-2"><small>Project Name</small><br><span
@@ -542,46 +463,58 @@
 
         <div class="overlay"></div>
         <div class="modal-right">
-            <div>
-                <span class="fs-6" id="child-name">Child Name</span>
-                <button type="button" class="close">X</button>
-            </div>
-
-            <div class="card">
-                <div class="card-image">
-                    <img id="child-image" src="" alt="Circuit diagram" height="120px">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3">
-                    <span style="font-size: 10px;">QUANTITY</span><br>
-                    <span id="child-qty" style="font-size: 10px;font-weight: 700;"></span>
-                </div>
-                <div class="col-md-4">
-                    <span style="font-size: 10px;">UNIT PRICE</span><br>
-                    <span id="child-unit-price" style="font-size: 10px;font-weight: 700;"></span>
-                </div>
-                <div class="col-md-4">
-                    <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                    <span id="child-total-price" style="font-size: 10px;font-weight: 700;"></span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <span style="font-size: 10px;">ORDERED DATE</span><br>
-                    <span id="child-date" style="font-size: 10px;font-weight: 700;"></span>
-                </div>
-            </div>
-
             <!-- Form should not be inside .row unless you want grid columns inside -->
             <form method="POST" action="/orders/update_eta_ata/" style="margin-top: 15px;">
-                <input type="hidden" name="csrfmiddlewaretoken"
-                    value="598BMLui4JhTAF2jrtAZ0L5NCuNLeVX8b0yJdslPQCzknnqhZIXDqvcUczt5NohF">
+                @csrf
                 <input type="hidden" class="form-control" name="item_id" id="child-item-id">
+                <div class="row">
+                    <div class="col-8"> <span class="fs-6" id="child-name"><input type="text"
+                                value="Child Name"
+                                class="form-control" /></span>
+                    </div>
 
-                <div class="form-group mb-2">
+                    <div class="col-4">
+                        <button type="button" class="close">X</button>
+                    </div>
+
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        <input type="file" class="form-control" style="font-size:0.7rem !important" />
+                        {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <span style="font-size: 10px;">QUANTITY</span><br>
+                        <span id="child-qty" style="font-size: 10px;font-weight: 700;"><input type="text"
+                                value="0" class="form-control" style="width:40px !important;font-size:0.7rem !important" /></span>
+                    </div>
+                    <div class="col-md-4">
+                        <span style="font-size: 10px;">UNIT PRICE</span><br>
+                        <span id="child-unit-price" style="font-size: 10px;font-weight: 700;"><input type="text"
+                                value="0" class="form-control" style="width:40px !important;font-size:0.7rem !important" /></span>
+                    </div>
+                    <div class="col-md-4">
+                        <span style="font-size: 10px;">TOTAL PRICE</span><br>
+                        <span id="child-total-price" style="font-size: 10px;font-weight: 700;"><input type="text"
+                                value="0" class="form-control" style="width:40px !important;font-size:0.7rem !important" /></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <span style="font-size: 10px;">ORDERED DATE</span><br>
+                        <span id="child-date" style="font-size: 10px !important;"><input type="date"
+                                class="form-control" style="font-size: 0.7rem !important;" /></span>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
                     <input type="date" class="form-control" id="eta" name="eta"
                         style="font-size: 0.7rem;">
@@ -876,7 +809,7 @@
                     }
 
                     // Fill modal fields
-                    document.getElementById("child-name").innerText = child.name;
+                    /* document.getElementById("child-name").innerText = child.name;
                     document.getElementById("child-qty").innerText = child.quantity;
                     document.getElementById("child-unit-price").innerText = child.unit_price;
                     document.getElementById("child-total-price").innerText = child.total_price;
@@ -886,6 +819,7 @@
                     document.getElementById("inspection").value = child.inspection;
                     document.getElementById("pm-remarks").value = child.pm;
                     document.getElementById("child-item-id").value = child.id;
+                    */
                     document.getElementById("child-image").src = child.image ||
                         "/static/images/no_image.png";
                 });
