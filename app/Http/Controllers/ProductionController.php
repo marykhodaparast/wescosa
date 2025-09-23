@@ -89,6 +89,7 @@ class ProductionController extends Controller
             'ata' => 'nullable|date|after_or_equal:eta',
         ]);
 
+
         $order_id = $request->input('order_id');
 
         $productionRequest = ProductionRequest::find($order_id);
@@ -98,6 +99,7 @@ class ProductionController extends Controller
         $production_request_child_element = ProductionRequestChildElement::where('po_id', $productionRequest->id)
             ->where('child_element_id', $request->input('product_child_element_id'))
             ->first();
+
         if (!$production_request_child_element) {
 
             $product_child_element = ProductChildElement::create([
@@ -106,7 +108,7 @@ class ProductionController extends Controller
                 'description' => $product->description,
                 'price' => $product->price,
             ]);
-            
+
             ProductionRequestChildElement::create([
                 'po_id' => $productionRequest->id,
                 'child_element_id' => $request->input('product_child_element_id') != 0 ? $request->input('product_child_element_id') : $product_child_element->id,
