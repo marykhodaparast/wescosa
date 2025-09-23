@@ -89,6 +89,8 @@ class ProductionController extends Controller
             'ata' => 'nullable|date|after_or_equal:eta',
         ]);
 
+        dd($request->all());
+
 
         $order_id = $request->input('order_id');
 
