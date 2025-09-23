@@ -89,8 +89,6 @@ class ProductionController extends Controller
             'ata' => 'nullable|date|after_or_equal:eta',
         ]);
 
-        dd($request->all());
-
 
         $order_id = $request->input('order_id');
 
@@ -154,12 +152,37 @@ class ProductionController extends Controller
         return back()->with('success', 'Excel file imported successfully.');
     }
 
-    public function generateQR($id)
+    public function generateQR($id, $child_id)
     {
         try {
             $qrData = 'http://127.0.0.1:8000/orders/single_order/' . $id;
 
-            $fileName = 'qr_' . $id . '.svg';
+            $selectedChildId = null;
+
+            switch($child_id){
+                case 157:
+                    $selectedChildId = 1;
+                    break;
+                case 158:
+                    $selectedChildId = 2;
+                    break;
+                case 159:
+                    $selectedChildId = 3;
+                    break;
+                case 160:
+                    $selectedChildId = 4;
+                    break;
+                case 161:
+                    $selectedChildId = 5;
+                    break;
+                case 162:
+                    $selectedChildId = 6;
+                    break;
+            }
+
+            //dd($child_id, $selectedChildId);
+
+            $fileName = 'qr_' . $child_id  . '.svg';
 
             $path = 'qr/' . $fileName;
 
@@ -170,6 +193,10 @@ class ProductionController extends Controller
             }
 
             $url = asset('storage/' . $path);
+
+            ProductionRequestChildElement::where('po_id', $id)
+                ->where('child_element_id', $selectedChildId)
+                ->update(['qr' => $path]);
 
             return response()->json([
                 'success' => true,

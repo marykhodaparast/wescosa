@@ -24,7 +24,7 @@ Route::post('/purchase-orders/import', [ProductionController::class, 'import'])-
 
 Route::get('/orders/po_list/', [ProductionController::class, 'index'])->name('orders_list');
 
-Route::get('/orders/generate-qr/{id}', [ProductionController::class, 'generateQR']);
+Route::get('/orders/generate-qr/{id}/{child_id}', [ProductionController::class, 'generateQR']);
 
 Route::get('/orders/single_order/{id}', [ProductionController::class, 'single_order'])->name('single_order');
 
