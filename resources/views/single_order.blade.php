@@ -644,7 +644,17 @@
                         document.querySelector('.modal-right-one')?.classList.add('show');
                         document.querySelector('.overlay-one')?.classList.add('show');
 
+                        document.querySelector('.modal-right-three')?.classList.remove('show');
+                        document.querySelector('.overlay-three')?.classList.remove('show');
+                        document.querySelector('.modal-right-four')?.classList.remove('show');
+                        document.querySelector('.overlay-four')?.classList.remove('show');
+                        document.querySelector('.modal-right-five')?.classList.remove('show');
+                        document.querySelector('.overlay-five')?.classList.remove('show');
+                        document.querySelector('.modal-right-six')?.classList.remove('show');
+                        document.querySelector('.overlay-six')?.classList.remove('show');
 
+                        const savedImage = localStorage.getItem("childImageOne");
+                        document.getElementById("child-image-one").src = savedImage;
                     });
                 </script>
             @endif
@@ -783,6 +793,16 @@
                         document.querySelector('.overlay-two')?.classList.add('show');
                         document.querySelector('.modal-right-one')?.classList.remove('show');
                         document.querySelector('.overlay-one')?.classList.remove('show');
+                        document.querySelector('.modal-right-three')?.classList.remove('show');
+                        document.querySelector('.overlay-three')?.classList.remove('show');
+                        document.querySelector('.modal-right-four')?.classList.remove('show');
+                        document.querySelector('.overlay-four')?.classList.remove('show');
+                        document.querySelector('.modal-right-five')?.classList.remove('show');
+                        document.querySelector('.overlay-five')?.classList.remove('show');
+                        document.querySelector('.modal-right-six')?.classList.remove('show');
+                        document.querySelector('.overlay-six')?.classList.remove('show');
+                        const savedImage = localStorage.getItem("childImage");
+                        document.getElementById("child-image-two").src = savedImage;
                     });
                 </script>
             @endif
@@ -801,6 +821,8 @@
                 enctype="multipart/form-data">
                 @csrf
 
+                <input type="hidden" name="child_image" id="child_image_input"
+                    value="{{ old('child-image_two', $child->image ?? '') }}">
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
@@ -901,6 +923,39 @@
 
         <div class="overlay-three"></div>
         <div class="modal-right-three">
+            @if ($errors->any() && count(array_filter($errors->keys(), fn($key) => str_ends_with($key, '_three'))) > 0)
+                <div class="alert alert-danger" style="font-size:0.8rem !important;">
+                    <ul>
+                        @foreach ($errors->keys() as $key)
+                            @if (str_ends_with($key, '_three'))
+                                @foreach ($errors->get($key) as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+
+                        document.querySelector('.modal-right-three')?.classList.add('show');
+                        document.querySelector('.overlay-three')?.classList.add('show');
+                        document.querySelector('.modal-right-one')?.classList.remove('show');
+                        document.querySelector('.overlay-one')?.classList.remove('show');
+                        document.querySelector('.modal-right-two')?.classList.remove('show');
+                        document.querySelector('.overlay-two')?.classList.remove('show');
+                        document.querySelector('.modal-right-four')?.classList.remove('show');
+                        document.querySelector('.overlay-four')?.classList.remove('show');
+                        document.querySelector('.modal-right-five')?.classList.remove('show');
+                        document.querySelector('.overlay-five')?.classList.remove('show');
+                        document.querySelector('.modal-right-six')?.classList.remove('show');
+                        document.querySelector('.overlay-six')?.classList.remove('show');
+                        const savedImage = localStorage.getItem("childImageThree");
+                        document.getElementById("child-image-three").src = savedImage;
+                    });
+                </script>
+            @endif
+
             @php
 
                 $product_child_element_id =
@@ -921,7 +976,7 @@
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
                     <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-three"
-                                name="child-name" placeholder="Child Name"
+                                name="child-name_three" placeholder="Child Name"
                                 value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
                     </div>
 
@@ -939,8 +994,8 @@
                         @elseif($production_request_child_element && $production_request_child_element->image === null)
                             <img id="child-image-three" src="" alt="Circuit diagram" height="120px">
                         @else
-                            <input type="file" class="form-control" id="child-image-three" name="child-image"
-                                style="font-size:0.7rem !important" />
+                            <input type="file" class="form-control" id="child-image-three"
+                                name="child-image_three" style="font-size:0.7rem !important" />
                         @endif
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
@@ -950,21 +1005,21 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-three"
-                                name="child-qty" value="{{ $production_request_child_element?->quantity }}"
+                                name="child-qty_three" value="{{ $production_request_child_element?->quantity }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-three" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-unit-price"
+                                type="text" name="child-unit-price_three"
                                 value="{{ $production_request_child_element?->unit_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-three" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-total-price"
+                                type="text" name="child-total-price_three"
                                 value="{{ $production_request_child_element?->total_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -974,7 +1029,7 @@
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
                         <span id="child-date-three" style="font-size: 10px !important;"><input type="date"
-                                name="child-date" class="form-control"
+                                name="child-date_three" class="form-control"
                                 value="{{ $production_request_child_element?->date_order }}"
                                 style="font-size: 0.7rem !important;" /></span>
                     </div>
@@ -984,26 +1039,26 @@
 
                 <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
-                    <input type="date" class="form-control" id="eta-three" name="eta"
+                    <input type="date" class="form-control" id="eta-three" name="eta_three"
                         value="{{ $production_request_child_element?->eta_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">ATA</label>
-                    <input type="date" class="form-control" id="ata-three" name="ata"
+                    <input type="date" class="form-control" id="ata-three" name="ata_three"
                         value="{{ $production_request_child_element?->ata_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">Inspection Remarks</label>
-                    <input type="text" class="form-control" id="inspection-three" name="inspection"
+                    <input type="text" class="form-control" id="inspection-three" name="inspection_three"
                         value="{{ $production_request_child_element?->inspection_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-3">
                     <label style="font-size: 12px;">Production Manager Remarks</label>
-                    <input type="text" class="form-control" id="pm-remarks-three" name="pm_remarks"
+                    <input type="text" class="form-control" id="pm-remarks-three" name="pm_remarks_three"
                         value="{{ $production_request_child_element?->production_manager_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
@@ -1016,6 +1071,40 @@
 
         <div class="overlay-four"></div>
         <div class="modal-right-four">
+            @if ($errors->any() && count(array_filter($errors->keys(), fn($key) => str_ends_with($key, '_four'))) > 0)
+                <div class="alert alert-danger" style="font-size:0.8rem !important;">
+                    <ul>
+                        @foreach ($errors->keys() as $key)
+                            @if (str_ends_with($key, '_four'))
+                                @foreach ($errors->get($key) as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+
+                        document.querySelector('.modal-right-four')?.classList.add('show');
+                        document.querySelector('.overlay-four')?.classList.add('show');
+                        document.querySelector('.modal-right-one')?.classList.remove('show');
+                        document.querySelector('.overlay-one')?.classList.remove('show');
+
+                        document.querySelector('.modal-right-two')?.classList.remove('show');
+                        document.querySelector('.overlay-two')?.classList.remove('show');
+                        document.querySelector('.modal-right-three')?.classList.remove('show');
+                        document.querySelector('.overlay-three')?.classList.remove('show');
+                        document.querySelector('.modal-right-five')?.classList.remove('show');
+                        document.querySelector('.overlay-five')?.classList.remove('show');
+                        document.querySelector('.modal-right-six')?.classList.remove('show');
+                        document.querySelector('.overlay-six')?.classList.remove('show');
+
+                        const savedImage = localStorage.getItem("childImageFour");
+                        document.getElementById("child-image-four").src = savedImage;
+                    });
+                </script>
+            @endif
             @php
 
                 $product_child_element_id =
@@ -1036,7 +1125,7 @@
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
                     <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-four"
-                                name="child-name" placeholder="Child Name"
+                                name="child-name_four" placeholder="Child Name"
                                 value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
                     </div>
 
@@ -1054,7 +1143,7 @@
                         @elseif($production_request_child_element && $production_request_child_element->image === null)
                             <img id="child-image-four" src="" alt="Circuit diagram" height="120px">
                         @else
-                            <input type="file" class="form-control" id="child-image-four" name="child-image"
+                            <input type="file" class="form-control" id="child-image-four" name="child-image_four"
                                 style="font-size:0.7rem !important" />
                         @endif
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
@@ -1065,21 +1154,21 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-four"
-                                name="child-qty" value="{{ $production_request_child_element?->quantity }}"
+                                name="child-qty_four" value="{{ $production_request_child_element?->quantity }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-four" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-unit-price"
+                                type="text" name="child-unit-price_four"
                                 value="{{ $production_request_child_element?->unit_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-four" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-total-price"
+                                type="text" name="child-total-price_four"
                                 value="{{ $production_request_child_element?->total_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -1089,7 +1178,7 @@
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
                         <span id="child-date-four" style="font-size: 10px !important;"><input type="date"
-                                name="child-date" class="form-control"
+                                name="child-date_four" class="form-control"
                                 value="{{ $production_request_child_element?->date_order }}"
                                 style="font-size: 0.7rem !important;" /></span>
                     </div>
@@ -1097,26 +1186,26 @@
 
                 <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
-                    <input type="date" class="form-control" id="eta-four" name="eta"
+                    <input type="date" class="form-control" id="eta-four" name="eta_four"
                         value="{{ $production_request_child_element?->eta_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">ATA</label>
-                    <input type="date" class="form-control" id="ata-four" name="ata"
+                    <input type="date" class="form-control" id="ata-four" name="ata_four"
                         value="{{ $production_request_child_element?->ata_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">Inspection Remarks</label>
-                    <input type="text" class="form-control" id="inspection-four" name="inspection"
+                    <input type="text" class="form-control" id="inspection-four" name="inspection_four"
                         value="{{ $production_request_child_element?->inspection_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-3">
                     <label style="font-size: 12px;">Production Manager Remarks</label>
-                    <input type="text" class="form-control" id="pm-remarks-four" name="pm_remarks"
+                    <input type="text" class="form-control" id="pm-remarks-four" name="pm_remarks_four"
                         value="{{ $production_request_child_element?->production_manager_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
@@ -1129,6 +1218,40 @@
 
         <div class="overlay-five"></div>
         <div class="modal-right-five">
+             @if ($errors->any() && count(array_filter($errors->keys(), fn($key) => str_ends_with($key, '_five'))) > 0)
+                <div class="alert alert-danger" style="font-size:0.8rem !important;">
+                    <ul>
+                        @foreach ($errors->keys() as $key)
+                            @if (str_ends_with($key, '_five'))
+                                @foreach ($errors->get($key) as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+
+                        document.querySelector('.modal-right-five')?.classList.add('show');
+                        document.querySelector('.overlay-five')?.classList.add('show');
+                        document.querySelector('.modal-right-one')?.classList.remove('show');
+                        document.querySelector('.overlay-one')?.classList.remove('show');
+
+                        document.querySelector('.modal-right-two')?.classList.remove('show');
+                        document.querySelector('.overlay-two')?.classList.remove('show');
+                        document.querySelector('.modal-right-three')?.classList.remove('show');
+                        document.querySelector('.overlay-three')?.classList.remove('show');
+                        document.querySelector('.modal-right-four')?.classList.remove('show');
+                        document.querySelector('.overlay-four')?.classList.remove('show');
+                        document.querySelector('.modal-right-six')?.classList.remove('show');
+                        document.querySelector('.overlay-six')?.classList.remove('show');
+
+                        const savedImage = localStorage.getItem("childImageFive");
+                        document.getElementById("child-image-five").src = savedImage;
+                    });
+                </script>
+            @endif
             @php
 
                 $product_child_element_id =
@@ -1149,7 +1272,7 @@
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
                     <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-five"
-                                name="child-name" placeholder="Child Name"
+                                name="child-name_five" placeholder="Child Name"
                                 value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
                     </div>
 
@@ -1167,7 +1290,7 @@
                         @elseif($production_request_child_element && $production_request_child_element->image === null)
                             <img id="child-image-five" src="" alt="Circuit diagram" height="120px">
                         @else
-                            <input type="file" class="form-control" id="child-image-five" name="child-image"
+                            <input type="file" class="form-control" id="child-image-five" name="child-image_five"
                                 style="font-size:0.7rem !important" />
                         @endif
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
@@ -1178,21 +1301,21 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-five"
-                                name="child-qty" value="{{ $production_request_child_element?->quantity }}"
+                                name="child-qty_five" value="{{ $production_request_child_element?->quantity }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-five" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-unit-price"
+                                type="text" name="child-unit-price_five"
                                 value="{{ $production_request_child_element?->unit_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-five" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-total-price"
+                                type="text" name="child-total-price_five"
                                 value="{{ $production_request_child_element?->total_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -1202,7 +1325,7 @@
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
                         <span id="child-date-five" style="font-size: 10px !important;"><input type="date"
-                                name="child-date" class="form-control"
+                                name="child-date_five" class="form-control"
                                 value="{{ $production_request_child_element?->date_order }}"
                                 style="font-size: 0.7rem !important;" /></span>
                     </div>
@@ -1212,26 +1335,26 @@
 
                 <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
-                    <input type="date" class="form-control" id="eta-five" name="eta"
+                    <input type="date" class="form-control" id="eta-five" name="eta_five"
                         value="{{ $production_request_child_element?->eta_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">ATA</label>
-                    <input type="date" class="form-control" id="ata-five" name="ata"
+                    <input type="date" class="form-control" id="ata-five" name="ata_five"
                         value="{{ $production_request_child_element?->ata_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">Inspection Remarks</label>
-                    <input type="text" class="form-control" id="inspection-five" name="inspection"
+                    <input type="text" class="form-control" id="inspection-five" name="inspection_five"
                         value="{{ $production_request_child_element?->inspection_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-3">
                     <label style="font-size: 12px;">Production Manager Remarks</label>
-                    <input type="text" class="form-control" id="pm-remarks-five" name="pm_remarks"
+                    <input type="text" class="form-control" id="pm-remarks-five" name="pm_remarks_five"
                         value="{{ $production_request_child_element?->production_manager_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
@@ -1244,6 +1367,40 @@
 
         <div class="overlay-six"></div>
         <div class="modal-right-six">
+              @if ($errors->any() && count(array_filter($errors->keys(), fn($key) => str_ends_with($key, '_six'))) > 0)
+                <div class="alert alert-danger" style="font-size:0.8rem !important;">
+                    <ul>
+                        @foreach ($errors->keys() as $key)
+                            @if (str_ends_with($key, '_six'))
+                                @foreach ($errors->get($key) as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+
+                        document.querySelector('.modal-right-six')?.classList.add('show');
+                        document.querySelector('.overlay-six')?.classList.add('show');
+                        document.querySelector('.modal-right-one')?.classList.remove('show');
+                        document.querySelector('.overlay-one')?.classList.remove('show');
+
+                        document.querySelector('.modal-right-two')?.classList.remove('show');
+                        document.querySelector('.overlay-two')?.classList.remove('show');
+                        document.querySelector('.modal-right-three')?.classList.remove('show');
+                        document.querySelector('.overlay-three')?.classList.remove('show');
+                        document.querySelector('.modal-right-four')?.classList.remove('show');
+                        document.querySelector('.overlay-four')?.classList.remove('show');
+                        document.querySelector('.modal-right-five')?.classList.remove('show');
+                        document.querySelector('.overlay-five')?.classList.remove('show');
+
+                        const savedImage = localStorage.getItem("childImageSix");
+                        document.getElementById("child-image-six").src = savedImage;
+                    });
+                </script>
+            @endif
             @php
 
                 $product_child_element_id =
@@ -1266,13 +1423,13 @@
                 <div class="row">
                     <div class="col-8">
                         <span class="fs-6">
-                            <input type="text" id="child-name-six" name="child-name" placeholder="Child Name"
+                            <input type="text" id="child-name-six" name="child-name_six" placeholder="Child Name"
                                 value="{{ old('child-name', $production_request_child_element?->name) }}"
                                 class="form-control" />
                         </span>
-                        @error('child-name')
+                        {{-- @error('child-name')
                             <div class="text-danger small">{{ $message }}</div>
-                        @enderror
+                        @enderror --}}
                     </div>
 
                     <div class="col-4">
@@ -1288,7 +1445,7 @@
                         @elseif($production_request_child_element && $production_request_child_element->image === null)
                             <img id="child-image-six" src="" alt="Circuit diagram" height="120px">
                         @else
-                            <input type="file" class="form-control" id="child-image-six" name="child-image"
+                            <input type="file" class="form-control" id="child-image-six" name="child-image_six"
                                 style="font-size:0.7rem !important" />
                             @error('child-image')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -1301,7 +1458,7 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;">
-                            <input type="text" id="child-qty-six" name="child-qty"
+                            <input type="text" id="child-qty-six" name="child-qty_six"
                                 value="{{ old('child-qty', $production_request_child_element?->quantity) }}"
                                 class="form-control" style="width:40px !important;font-size:0.7rem !important" />
                         </span>
@@ -1313,7 +1470,7 @@
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-six" style="font-size: 10px;font-weight: 700;">
-                            <input type="text" name="child-unit-price"
+                            <input type="text" name="child-unit-price_six"
                                 value="{{ old('child-unit-price', $production_request_child_element?->unit_price) }}"
                                 class="form-control" style="width:60px !important;font-size:0.7rem !important" />
                         </span>
@@ -1325,7 +1482,7 @@
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-six" style="font-size: 10px;font-weight: 700;">
-                            <input type="text" name="child-total-price"
+                            <input type="text" name="child-total-price_six"
                                 value="{{ old('child-total-price', $production_request_child_element?->total_price) }}"
                                 class="form-control" style="width:60px !important;font-size:0.7rem !important" />
                         </span>
@@ -1339,7 +1496,7 @@
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
                         <span id="child-date-six" style="font-size: 10px !important;">
-                            <input type="date" name="child-date" class="form-control"
+                            <input type="date" name="child-date_six" class="form-control"
                                 value="{{ old('child-date', $production_request_child_element?->date_order) }}"
                                 style="font-size: 0.7rem !important;" />
                         </span>
@@ -1351,7 +1508,7 @@
 
                 <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
-                    <input type="date" class="form-control" id="eta-six" name="eta"
+                    <input type="date" class="form-control" id="eta-six" name="eta_six"
                         value="{{ old('eta', $production_request_child_element?->eta_child) }}"
                         style="font-size: 0.7rem;">
                     @error('eta')
@@ -1361,7 +1518,7 @@
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">ATA</label>
-                    <input type="date" class="form-control" id="ata-six" name="ata"
+                    <input type="date" class="form-control" id="ata-six" name="ata_six"
                         value="{{ old('ata', $production_request_child_element?->ata_child) }}"
                         style="font-size: 0.7rem;">
                     @error('ata')
@@ -1371,7 +1528,7 @@
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">Inspection Remarks</label>
-                    <input type="text" class="form-control" id="inspection-six" name="inspection"
+                    <input type="text" class="form-control" id="inspection-six" name="inspection_six"
                         value="{{ old('inspection', $production_request_child_element?->inspection_remarks) }}"
                         style="font-size: 0.7rem;">
                     @error('inspection')
@@ -1381,7 +1538,7 @@
 
                 <div class="form-group mb-3">
                     <label style="font-size: 12px;">Production Manager Remarks</label>
-                    <input type="text" class="form-control" id="pm-remarks-six" name="pm_remarks"
+                    <input type="text" class="form-control" id="pm-remarks-six" name="pm_remarks_six"
                         value="{{ old('pm_remarks', $production_request_child_element?->production_manager_remarks) }}"
                         style="font-size: 0.7rem;">
                     @error('pm_remarks')
@@ -1874,6 +2031,7 @@
                     }
 
                     // Fill modal fields
+                    localStorage.setItem("childImageOne", child.image || "");
                     document.getElementById("child-image").src = child.image ||
                         "/static/images/no_image.png";
                 });
@@ -1883,6 +2041,11 @@
             closeBtn.addEventListener("click", () => {
                 sidebar.classList.remove("show");
                 overlay.classList.remove("show");
+
+                document.querySelectorAll(".alert-danger").forEach(el => {
+                    el.classList.add("d-none");
+                    el.innerHTML = "";
+                });
             });
 
             overlay.addEventListener("click", () => {
@@ -1921,8 +2084,10 @@
                     }
 
                     // Fill modal fields
+                    localStorage.setItem("childImage", child.image || "");
                     document.getElementById("child-image-two").src = child.image ||
                         "/static/images/no_image.png";
+
                 });
             });
 
@@ -1930,6 +2095,12 @@
             closeBtn2.addEventListener("click", () => {
                 sidebar2.classList.remove("show");
                 overlay2.classList.remove("show");
+
+                document.querySelectorAll(".alert-danger").forEach(el => {
+                    el.classList.add("d-none");
+                    el.innerHTML = "";
+                });
+
             });
 
             overlay2.addEventListener("click", () => {
@@ -1979,6 +2150,7 @@
                     document.getElementById("pm-remarks").value = child.pm;
                     document.getElementById("child-item-id").value = child.id;
                     */
+                    localStorage.setItem("childImageThree", child.image || "");
                     document.getElementById("child-image-three").src = child.image ||
                         "/static/images/no_image.png";
                 });
@@ -1988,6 +2160,11 @@
             closeBtn3.addEventListener("click", () => {
                 sidebar3.classList.remove("show");
                 overlay3.classList.remove("show");
+
+                document.querySelectorAll(".alert-danger").forEach(el => {
+                    el.classList.add("d-none");
+                    el.innerHTML = "";
+                });
             });
 
             overlay3.addEventListener("click", () => {
@@ -2025,7 +2202,7 @@
                     }
 
                     // Fill modal fields
-
+                    localStorage.setItem("childImageFour", child.image || "");
                     document.getElementById("child-image-four").src = child.image ||
                         "/static/images/no_image.png";
                 });
@@ -2035,6 +2212,11 @@
             closeBtn4.addEventListener("click", () => {
                 sidebar4.classList.remove("show");
                 overlay4.classList.remove("show");
+
+                document.querySelectorAll(".alert-danger").forEach(el => {
+                    el.classList.add("d-none");
+                    el.innerHTML = "";
+                });
             });
 
             overlay4.addEventListener("click", () => {
@@ -2072,6 +2254,7 @@
                     }
 
                     // Fill modal fields
+                    localStorage.setItem("childImageFive", child.image || "");
                     document.getElementById("child-image-five").src = child.image ||
                         "/static/images/no_image.png";
                 });
@@ -2081,6 +2264,11 @@
             closeBtn5.addEventListener("click", () => {
                 sidebar5.classList.remove("show");
                 overlay5.classList.remove("show");
+
+                document.querySelectorAll(".alert-danger").forEach(el => {
+                    el.classList.add("d-none");
+                    el.innerHTML = "";
+                });
             });
 
             overlay5.addEventListener("click", () => {
@@ -2119,6 +2307,7 @@
                     }
 
                     // Fill modal fields
+                    localStorage.setItem("childImageSix", child.image || "");
                     document.getElementById("child-image-six").src = child.image ||
                         "/static/images/no_image.png";
                 });
@@ -2128,6 +2317,11 @@
             closeBtn6.addEventListener("click", () => {
                 sidebar6.classList.remove("show");
                 overlay6.classList.remove("show");
+
+                document.querySelectorAll(".alert-danger").forEach(el => {
+                    el.classList.add("d-none");
+                    el.innerHTML = "";
+                });
             });
 
             overlay6.addEventListener("click", () => {

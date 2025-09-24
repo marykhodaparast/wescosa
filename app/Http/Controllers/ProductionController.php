@@ -71,6 +71,72 @@ class ProductionController extends Controller
         return redirect()->back()->with('success', 'Production request created successfully.');
     }
 
+    function merge_rules($rules, $suffix)
+    {
+        $output_rules = array_merge($rules, [
+            "child-name_{$suffix}"        => 'required|string|max:255',
+            "child-qty_{$suffix}"         => 'required|integer|min:1',
+            "child-unit-price_{$suffix}"  => 'required|numeric|min:0',
+            "child-total-price_{$suffix}" => 'required|numeric|min:0',
+            "child-image_{$suffix}"       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            "child-date_{$suffix}"        => 'required|date', // ordered date
+            "inspection_{$suffix}"        => 'required|string|max:1000',
+            "pm_remarks_{$suffix}"        => 'required|string|max:1000',
+            "eta_{$suffix}"               => 'nullable|date',
+            "ata_{$suffix}"               => "nullable|date|after_or_equal:eta_{$suffix}",
+        ]);
+
+        return $output_rules;
+    }
+
+    function createChildElement($request, $suffix, $productionRequest, $product_child_element, $order_id)
+    {
+        if ($request->has("child-name_{$suffix}")) {
+            ProductionRequestChildElement::create([
+                'po_id' => $productionRequest->id,
+                'child_element_id' => $request->input('product_child_element_id') != 0
+                    ? $request->input('product_child_element_id')
+                    : $product_child_element->id,
+                'name' => $request->input("child-name_{$suffix}"),
+                'quantity' => $request->input("child-qty_{$suffix}"),
+                'unit_price' => $request->input("child-unit-price_{$suffix}"),
+                'total_price' => $request->input("child-total-price_{$suffix}"),
+                'image' => $request->file("child-image_{$suffix}")
+                    ? $request->file("child-image_{$suffix}")
+                    ->store("child_images/{$order_id}/{$product_child_element->id}", 'public')
+                    : null,
+                'date_order' => $request->input("child-date_{$suffix}"),
+                'inspection_remarks' => $request->input("inspection_{$suffix}"),
+                'production_manager_remarks' => $request->input("pm_remarks_{$suffix}"),
+                'eta_child' => $request->input("eta_{$suffix}"),
+                'ata_child' => $request->input("ata_{$suffix}"),
+            ]);
+        }
+    }
+
+    function updateChildElement($request, $suffix, $production_request_child_element, $order_id)
+    {
+        if ($request->has("child-name_{$suffix}")) {
+            $production_request_child_element->update([
+                'name' => $request->input("child-name_{$suffix}"),
+                'quantity' => $request->input("child-qty_{$suffix}"),
+                'unit_price' => $request->input("child-unit-price_{$suffix}"),
+                'total_price' => $request->input("child-total-price_{$suffix}"),
+                'image' => $request->file("child-image_{$suffix}")
+                    ? $request->file("child-image_{$suffix}")
+                    ->store("child_images/{$order_id}/" . $request->input("child-item-id"), 'public')
+                    : $production_request_child_element->image,
+                'date_order' => $request->input("child-date_{$suffix}"),
+                'inspection_remarks' => $request->input("inspection_{$suffix}"),
+                'production_manager_remarks' => $request->input("pm_remarks_{$suffix}"),
+                'eta_child' => $request->input("eta_{$suffix}"),
+                'ata_child' => $request->input("ata_{$suffix}"),
+            ]);
+        }
+    }
+
+
+
     public function update_eta_ata(Request $request)
     {
         $rules = [
@@ -80,89 +146,31 @@ class ProductionController extends Controller
         ];
 
         if ($request->has('child-name_one')) {
-            $rules = array_merge($rules, [
-                'child-name_one' => 'required|string|max:255',
-                'child-qty_one' => 'required|integer|min:1',
-                'child-unit-price_one' => 'required|numeric|min:0',
-                'child-total-price_one' => 'required|numeric|min:0',
-                'child-image_one' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'child-date_one' => 'required|date', //ordered date
-                'inspection_one' => 'required|string|max:1000',
-                'pm_remarks_one' => 'required|string|max:1000',
-                'eta_one' => 'nullable|date',
-                'ata_one' => 'nullable|date|after_or_equal:eta',
-            ]);
+            $rules = $this->merge_rules($rules, 'one');
         }
 
         if ($request->has('child-name_two')) {
-            $rules = array_merge($rules, [
-                'child-name_two' => 'required|string|max:255',
-                'child-qty_two' => 'required|integer|min:1',
-                'child-unit-price_two' => 'required|numeric|min:0',
-                'child-total-price_two' => 'required|numeric|min:0',
-                'child-image_two' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'child-date_two' => 'required|date', //ordered date
-                'inspection_two' => 'required|string|max:1000',
-                'pm_remarks_two' => 'required|string|max:1000',
-                'eta_two' => 'nullable|date',
-                'ata_two' => 'nullable|date|after_or_equal:eta',
-            ]);
+            $rules = $this->merge_rules($rules, 'two');
         }
 
+        if ($request->has('child-name_three')) {
+            $rules = $this->merge_rules($rules, 'three');
+        }
+
+        if ($request->has('child-name_four')) {
+            $rules = $this->merge_rules($rules, 'four');
+        }
+
+        if ($request->has('child-name_five')) {
+            $rules = $this->merge_rules($rules, 'five');
+        }
+
+        if ($request->has('child-name_six')) {
+            $rules = $this->merge_rules($rules, 'six');
+        }
 
         // Validate the request
-
         $request->validate($rules);
-        // $request->validate([
-        //     'order_id' => 'required|integer|exists:production_requests,id',
-        //     'product_child_element_id' => 'required|integer',
-        //     'product_id' => 'required|integer|exists:products,id',
-
-        //     'child-name_one' => 'required|string|max:255',
-        //     'child-qty_one' => 'required|integer|min:1',
-        //     'child-unit-price_one' => 'required|numeric|min:0',
-        //     'child-total-price_one' => 'required|numeric|min:0',
-        //     'child-image_one' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //     'child-date_one' => 'required|date', //ordered date
-        //     'inspection_one' => 'required|string|max:1000',
-        //     'pm_remarks_one' => 'required|string|max:1000',
-        //     'eta_one' => 'nullable|date',
-        //     'ata_one' => 'nullable|date|after_or_equal:eta',
-
-        // 'child-name_two' => 'required|string|max:255',
-        // 'child-qty_two' => 'required|integer|min:1',
-        // 'child-unit-price_two' => 'required|numeric|min:0',
-        // 'child-total-price_two' => 'required|numeric|min:0',
-        // 'child-image_two' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        // 'child-date_two' => 'required|date', //ordered date
-        // 'inspection_two' => 'required|string|max:1000',
-        // 'pm_remarks_two' => 'required|string|max:1000',
-        // 'eta_two' => 'nullable|date',
-        // 'ata_two' => 'nullable|date|after_or_equal:eta',
-        //]);
-
-        // $validator = Validator::make($request->all(), [
-        //     'order_id' => 'required|integer|exists:production_requests,id',
-        //     'product_child_element_id' => 'required|integer',
-        //     'child-name' => 'required|string|max:255',
-        //     'product_id' => 'required|integer|exists:products,id',
-        //     'child-qty' => 'required|integer|min:1',
-        //     'child-unit-price' => 'required|numeric|min:0',
-        //     'child-total-price' => 'required|numeric|min:0',
-        //     'child-image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //     'child-date' => 'required|date', //ordered date
-        //     'inspection' => 'required|string|max:1000',
-        //     'pm_remarks' => 'required|string|max:1000',
-        //     'eta' => 'nullable|date|before_or_equal:ata',
-        //     'ata' => 'nullable|date|after_or_equal:eta',
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'errors' => $validator->errors()
-        //     ], 422);
-        // }
 
         $order_id = $request->input('order_id');
 
@@ -183,72 +191,19 @@ class ProductionController extends Controller
                 'price' => $product->price,
             ]);
 
-            if ($request->has('child-name_one')) {
-
-                ProductionRequestChildElement::create([
-                    'po_id' => $productionRequest->id,
-                    'child_element_id' => $request->input('product_child_element_id') != 0 ? $request->input('product_child_element_id') : $product_child_element->id,
-                    'name' => $request->input('child-name_one'),
-                    'quantity' => $request->input('child-qty_one'),
-                    'unit_price' => $request->input('child-unit-price_one'),
-                    'total_price' => $request->input('child-total-price_one'),
-                    'image' => $request->file('child-image_one') ? $request->file('child-image_one')->store('child_images/' . $order_id . '/' . $product_child_element->id, 'public') : null,
-                    'date_order' => $request->input('child-date_one'),
-                    'inspection_remarks' => $request->input('inspection_one'),
-                    'production_manager_remarks' => $request->input('pm_remarks_one'),
-                    'eta_child' => $request->input('eta_one'),
-                    'ata_child' => $request->input('ata_one'),
-                ]);
-            }
-
-
-            if ($request->has('child-name_two')) {
-
-                ProductionRequestChildElement::create([
-                    'po_id' => $productionRequest->id,
-                    'child_element_id' => $request->input('product_child_element_id') != 0 ? $request->input('product_child_element_id') : $product_child_element->id,
-                    'name' => $request->input('child-name_two'),
-                    'quantity' => $request->input('child-qty_two'),
-                    'unit_price' => $request->input('child-unit-price_two'),
-                    'total_price' => $request->input('child-total-price_two'),
-                    'image' => $request->file('child-image_two') ? $request->file('child-image_two')->store('child_images/' . $order_id . '/' . $product_child_element->id, 'public') : null,
-                    'date_order' => $request->input('child-date_two'),
-                    'inspection_remarks' => $request->input('inspection_two'),
-                    'production_manager_remarks' => $request->input('pm_remarks_two'),
-                    'eta_child' => $request->input('eta_two'),
-                    'ata_child' => $request->input('ata_two'),
-                ]);
-            }
+            $this->createChildElement($request, 'one', $productionRequest, $product_child_element, $order_id);
+            $this->createChildElement($request, 'two', $productionRequest, $product_child_element, $order_id);
+            $this->createChildElement($request, 'three', $productionRequest, $product_child_element, $order_id);
+            $this->createChildElement($request, 'four', $productionRequest, $product_child_element, $order_id);
+            $this->createChildElement($request, 'five', $productionRequest, $product_child_element, $order_id);
+            $this->createChildElement($request, 'six', $productionRequest, $product_child_element, $order_id);
         } else {
-            if ($request->has('child-name_one')) {
-                $production_request_child_element->update([
-                    'name' => $request->input('child-name_one'),
-                    'quantity' => $request->input('child-qty_one'),
-                    'unit_price' => $request->input('child-unit-price_one'),
-                    'total_price' => $request->input('child-total-price_one'),
-                    'image' => $request->file('child-image_one') ? $request->file('child-image_one')->store('child_images/' . $order_id . '/' . $request->input('child-item-id'), 'public') : $production_request_child_element->image,
-                    'date_order' => $request->input('child-date_one'),
-                    'inspection_remarks' => $request->input('inspection_one'),
-                    'production_manager_remarks' => $request->input('pm_remarks_one'),
-                    'eta_child' => $request->input('eta_one'),
-                    'ata_child' => $request->input('ata_one'),
-                ]);
-            }
-
-            if ($request->has('child-name_two')) {
-                $production_request_child_element->update([
-                    'name' => $request->input('child-name_two'),
-                    'quantity' => $request->input('child-qty_two'),
-                    'unit_price' => $request->input('child-unit-price_two'),
-                    'total_price' => $request->input('child-total-price_two'),
-                    'image' => $request->file('child-image_two') ? $request->file('child-image_two')->store('child_images/' . $order_id . '/' . $request->input('child-item-id'), 'public') : $production_request_child_element->image,
-                    'date_order' => $request->input('child-date_two'),
-                    'inspection_remarks' => $request->input('inspection_two'),
-                    'production_manager_remarks' => $request->input('pm_remarks_two'),
-                    'eta_child' => $request->input('eta_two'),
-                    'ata_child' => $request->input('ata_two'),
-                ]);
-            }
+            $this->updateChildElement($request, 'one', $production_request_child_element, $order_id);
+            $this->updateChildElement($request, 'two', $production_request_child_element, $order_id);
+            $this->updateChildElement($request, 'three', $production_request_child_element, $order_id);
+            $this->updateChildElement($request, 'four', $production_request_child_element, $order_id);
+            $this->updateChildElement($request, 'five', $production_request_child_element, $order_id);
+            $this->updateChildElement($request, 'six', $production_request_child_element, $order_id);
         }
 
         return redirect()->back()->with('success', 'All child elements data updated successfully.');
