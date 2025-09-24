@@ -624,19 +624,27 @@
 
 
         <div class="overlay-one"></div>
-        <div class="modal-right-one">
-            @if ($errors->any())
+        <div class="modal-right-one" style="overflow-y: auto; max-height: 100vh;">
+            @if ($errors->any() && count(array_filter($errors->keys(), fn($key) => str_ends_with($key, '_one'))) > 0)
                 <div class="alert alert-danger" style="font-size:0.8rem !important;">
                     <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                        @foreach ($errors->keys() as $key)
+                            @if (str_ends_with($key, '_one'))
+                                @foreach ($errors->get($key) as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            @endif
                         @endforeach
                     </ul>
                 </div>
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
+                        document.querySelector('.modal-right-two')?.classList.remove('show');
+                        document.querySelector('.overlay-two')?.classList.remove('show');
                         document.querySelector('.modal-right-one')?.classList.add('show');
                         document.querySelector('.overlay-one')?.classList.add('show');
+
+
                     });
                 </script>
             @endif
@@ -659,7 +667,7 @@
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
                     <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-one"
-                                name="child-name" placeholder="Child Name"
+                                name="child-name_one" placeholder="Child Name"
                                 value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
                     </div>
 
@@ -675,7 +683,7 @@
                             <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
                                 alt="Child Image" width="258px" height="120px">
                         @else
-                            <input type="file" class="form-control" id="child-image-one" name="child-image"
+                            <input type="file" class="form-control" id="child-image-one" name="child-image_one"
                                 style="font-size:0.7rem !important" />
                         @endif
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
@@ -686,7 +694,8 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-one"
-                                name="child-qty" value="{{ old('child-qty', $production_request_child_element?->quantity) }}"
+                                name="child-qty_one"
+                                value="{{ old('child-qty_one', $production_request_child_element?->quantity) }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
                         {{-- @error('child-qty')
@@ -696,14 +705,14 @@
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-one" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-unit-price"
+                                type="text" name="child-unit-price_one"
                                 value="{{ $production_request_child_element?->unit_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-one" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-total-price"
+                                type="text" name="child-total-price_one"
                                 value="{{ $production_request_child_element?->total_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -713,7 +722,7 @@
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
                         <span id="child-date-one" style="font-size: 10px !important;"><input type="date"
-                                name="child-date" class="form-control"
+                                name="child-date_one" class="form-control"
                                 value="{{ $production_request_child_element?->date_order }}"
                                 style="font-size: 0.7rem !important;" />
                         </span>
@@ -722,26 +731,26 @@
 
                 <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
-                    <input type="date" class="form-control" id="eta-one" name="eta"
+                    <input type="date" class="form-control" id="eta-one" name="eta_one"
                         value="{{ $production_request_child_element?->eta_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">ATA</label>
-                    <input type="date" class="form-control" id="ata-one" name="ata"
+                    <input type="date" class="form-control" id="ata-one" name="ata_one"
                         value="{{ $production_request_child_element?->ata_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">Inspection Remarks</label>
-                    <input type="text" class="form-control" id="inspection-one" name="inspection"
+                    <input type="text" class="form-control" id="inspection-one" name="inspection_one"
                         value="{{ $production_request_child_element?->inspection_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-3">
                     <label style="font-size: 12px;">Production Manager Remarks</label>
-                    <input type="text" class="form-control" id="pm-remarks-one" name="pm_remarks"
+                    <input type="text" class="form-control" id="pm-remarks-one" name="pm_remarks_one"
                         value="{{ $production_request_child_element?->production_manager_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
@@ -755,6 +764,28 @@
 
         <div class="overlay-two"></div>
         <div class="modal-right-two">
+            @if ($errors->any() && count(array_filter($errors->keys(), fn($key) => str_ends_with($key, '_two'))) > 0)
+                <div class="alert alert-danger" style="font-size:0.8rem !important;">
+                    <ul>
+                        @foreach ($errors->keys() as $key)
+                            @if (str_ends_with($key, '_two'))
+                                @foreach ($errors->get($key) as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+
+                        document.querySelector('.modal-right-two')?.classList.add('show');
+                        document.querySelector('.overlay-two')?.classList.add('show');
+                        document.querySelector('.modal-right-one')?.classList.remove('show');
+                        document.querySelector('.overlay-one')?.classList.remove('show');
+                    });
+                </script>
+            @endif
             @php
 
                 $product_child_element_id =
@@ -775,7 +806,7 @@
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
                     <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-two"
-                                name="child-name" placeholder="Child Name"
+                                name="child-name_two" placeholder="Child Name"
                                 value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
                     </div>
 
@@ -793,7 +824,7 @@
                         @elseif($production_request_child_element && $production_request_child_element->image === null)
                             <img id="child-image-two" src="" alt="Circuit diagram" height="120px">
                         @else
-                            <input type="file" class="form-control" id="child-image-two" name="child-image"
+                            <input type="file" class="form-control" id="child-image-two" name="child-image_two"
                                 style="font-size:0.7rem !important" />
                         @endif
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
@@ -804,21 +835,21 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-two"
-                                name="child-qty" value="{{ $production_request_child_element?->quantity }}"
+                                name="child-qty_two" value="{{ $production_request_child_element?->quantity }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-two" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-unit-price"
+                                type="text" name="child-unit-price_two"
                                 value="{{ $production_request_child_element?->unit_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-two" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-total-price"
+                                type="text" name="child-total-price_two"
                                 value="{{ $production_request_child_element?->total_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -828,7 +859,7 @@
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
                         <span id="child-date-two" style="font-size: 10px !important;"><input type="date"
-                                name="child-date" class="form-control"
+                                name="child-date_two" class="form-control"
                                 value="{{ $production_request_child_element?->date_order }}"
                                 style="font-size: 0.7rem !important;" /></span>
                     </div>
@@ -838,26 +869,26 @@
 
                 <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
-                    <input type="date" class="form-control" id="eta-two" name="eta"
+                    <input type="date" class="form-control" id="eta-two" name="eta_two"
                         value="{{ $production_request_child_element?->eta_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">ATA</label>
-                    <input type="date" class="form-control" id="ata-two" name="ata"
+                    <input type="date" class="form-control" id="ata-two" name="ata_two"
                         value="{{ $production_request_child_element?->ata_child }}" style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">Inspection Remarks</label>
-                    <input type="text" class="form-control" id="inspection-two" name="inspection"
+                    <input type="text" class="form-control" id="inspection-two" name="inspection_two"
                         value="{{ $production_request_child_element?->inspection_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>
 
                 <div class="form-group mb-3">
                     <label style="font-size: 12px;">Production Manager Remarks</label>
-                    <input type="text" class="form-control" id="pm-remarks-two" name="pm_remarks"
+                    <input type="text" class="form-control" id="pm-remarks-two" name="pm_remarks_two"
                         value="{{ $production_request_child_element?->production_manager_remarks }}"
                         style="font-size: 0.7rem;">
                 </div>

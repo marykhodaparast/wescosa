@@ -73,22 +73,73 @@ class ProductionController extends Controller
 
     public function update_eta_ata(Request $request)
     {
-        // Validate the request
-        $request->validate([
+        $rules = [
             'order_id' => 'required|integer|exists:production_requests,id',
             'product_child_element_id' => 'required|integer',
-            'child-name' => 'required|string|max:255',
             'product_id' => 'required|integer|exists:products,id',
-            'child-qty' => 'required|integer|min:1',
-            'child-unit-price' => 'required|numeric|min:0',
-            'child-total-price' => 'required|numeric|min:0',
-            'child-image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'child-date' => 'required|date', //ordered date
-            'inspection' => 'required|string|max:1000',
-            'pm_remarks' => 'required|string|max:1000',
-            'eta' => 'nullable|date',
-            'ata' => 'nullable|date|after_or_equal:eta',
-        ]);
+        ];
+
+        if ($request->has('child-name_one')) {
+            $rules = array_merge($rules, [
+                'child-name_one' => 'required|string|max:255',
+                'child-qty_one' => 'required|integer|min:1',
+                'child-unit-price_one' => 'required|numeric|min:0',
+                'child-total-price_one' => 'required|numeric|min:0',
+                'child-image_one' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'child-date_one' => 'required|date', //ordered date
+                'inspection_one' => 'required|string|max:1000',
+                'pm_remarks_one' => 'required|string|max:1000',
+                'eta_one' => 'nullable|date',
+                'ata_one' => 'nullable|date|after_or_equal:eta',
+            ]);
+        }
+
+        if ($request->has('child-name_two')) {
+            $rules = array_merge($rules, [
+                'child-name_two' => 'required|string|max:255',
+                'child-qty_two' => 'required|integer|min:1',
+                'child-unit-price_two' => 'required|numeric|min:0',
+                'child-total-price_two' => 'required|numeric|min:0',
+                'child-image_two' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'child-date_two' => 'required|date', //ordered date
+                'inspection_two' => 'required|string|max:1000',
+                'pm_remarks_two' => 'required|string|max:1000',
+                'eta_two' => 'nullable|date',
+                'ata_two' => 'nullable|date|after_or_equal:eta',
+            ]);
+        }
+
+
+        // Validate the request
+
+        $request->validate($rules);
+        // $request->validate([
+        //     'order_id' => 'required|integer|exists:production_requests,id',
+        //     'product_child_element_id' => 'required|integer',
+        //     'product_id' => 'required|integer|exists:products,id',
+
+        //     'child-name_one' => 'required|string|max:255',
+        //     'child-qty_one' => 'required|integer|min:1',
+        //     'child-unit-price_one' => 'required|numeric|min:0',
+        //     'child-total-price_one' => 'required|numeric|min:0',
+        //     'child-image_one' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'child-date_one' => 'required|date', //ordered date
+        //     'inspection_one' => 'required|string|max:1000',
+        //     'pm_remarks_one' => 'required|string|max:1000',
+        //     'eta_one' => 'nullable|date',
+        //     'ata_one' => 'nullable|date|after_or_equal:eta',
+
+        // 'child-name_two' => 'required|string|max:255',
+        // 'child-qty_two' => 'required|integer|min:1',
+        // 'child-unit-price_two' => 'required|numeric|min:0',
+        // 'child-total-price_two' => 'required|numeric|min:0',
+        // 'child-image_two' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // 'child-date_two' => 'required|date', //ordered date
+        // 'inspection_two' => 'required|string|max:1000',
+        // 'pm_remarks_two' => 'required|string|max:1000',
+        // 'eta_two' => 'nullable|date',
+        // 'ata_two' => 'nullable|date|after_or_equal:eta',
+        //]);
 
         // $validator = Validator::make($request->all(), [
         //     'order_id' => 'required|integer|exists:production_requests,id',
@@ -132,33 +183,72 @@ class ProductionController extends Controller
                 'price' => $product->price,
             ]);
 
-            ProductionRequestChildElement::create([
-                'po_id' => $productionRequest->id,
-                'child_element_id' => $request->input('product_child_element_id') != 0 ? $request->input('product_child_element_id') : $product_child_element->id,
-                'name' => $request->input('child-name'),
-                'quantity' => $request->input('child-qty'),
-                'unit_price' => $request->input('child-unit-price'),
-                'total_price' => $request->input('child-total-price'),
-                'image' => $request->file('child-image') ? $request->file('child-image')->store('child_images/' . $order_id . '/' . $product_child_element->id, 'public') : null,
-                'date_order' => $request->input('child-date'),
-                'inspection_remarks' => $request->input('inspection'),
-                'production_manager_remarks' => $request->input('pm_remarks'),
-                'eta_child' => $request->input('eta'),
-                'ata_child' => $request->input('ata'),
-            ]);
+            if ($request->has('child-name_one')) {
+
+                ProductionRequestChildElement::create([
+                    'po_id' => $productionRequest->id,
+                    'child_element_id' => $request->input('product_child_element_id') != 0 ? $request->input('product_child_element_id') : $product_child_element->id,
+                    'name' => $request->input('child-name_one'),
+                    'quantity' => $request->input('child-qty_one'),
+                    'unit_price' => $request->input('child-unit-price_one'),
+                    'total_price' => $request->input('child-total-price_one'),
+                    'image' => $request->file('child-image_one') ? $request->file('child-image_one')->store('child_images/' . $order_id . '/' . $product_child_element->id, 'public') : null,
+                    'date_order' => $request->input('child-date_one'),
+                    'inspection_remarks' => $request->input('inspection_one'),
+                    'production_manager_remarks' => $request->input('pm_remarks_one'),
+                    'eta_child' => $request->input('eta_one'),
+                    'ata_child' => $request->input('ata_one'),
+                ]);
+            }
+
+
+            if ($request->has('child-name_two')) {
+
+                ProductionRequestChildElement::create([
+                    'po_id' => $productionRequest->id,
+                    'child_element_id' => $request->input('product_child_element_id') != 0 ? $request->input('product_child_element_id') : $product_child_element->id,
+                    'name' => $request->input('child-name_two'),
+                    'quantity' => $request->input('child-qty_two'),
+                    'unit_price' => $request->input('child-unit-price_two'),
+                    'total_price' => $request->input('child-total-price_two'),
+                    'image' => $request->file('child-image_two') ? $request->file('child-image_two')->store('child_images/' . $order_id . '/' . $product_child_element->id, 'public') : null,
+                    'date_order' => $request->input('child-date_two'),
+                    'inspection_remarks' => $request->input('inspection_two'),
+                    'production_manager_remarks' => $request->input('pm_remarks_two'),
+                    'eta_child' => $request->input('eta_two'),
+                    'ata_child' => $request->input('ata_two'),
+                ]);
+            }
         } else {
-            $production_request_child_element->update([
-                'name' => $request->input('child-name'),
-                'quantity' => $request->input('child-qty'),
-                'unit_price' => $request->input('child-unit-price'),
-                'total_price' => $request->input('child-total-price'),
-                'image' => $request->file('child-image') ? $request->file('child-image')->store('child_images/' . $order_id . '/' . $request->input('child-item-id'), 'public') : $production_request_child_element->image,
-                'date_order' => $request->input('child-date'),
-                'inspection_remarks' => $request->input('inspection'),
-                'production_manager_remarks' => $request->input('pm_remarks'),
-                'eta_child' => $request->input('eta'),
-                'ata_child' => $request->input('ata'),
-            ]);
+            if ($request->has('child-name_one')) {
+                $production_request_child_element->update([
+                    'name' => $request->input('child-name_one'),
+                    'quantity' => $request->input('child-qty_one'),
+                    'unit_price' => $request->input('child-unit-price_one'),
+                    'total_price' => $request->input('child-total-price_one'),
+                    'image' => $request->file('child-image_one') ? $request->file('child-image_one')->store('child_images/' . $order_id . '/' . $request->input('child-item-id'), 'public') : $production_request_child_element->image,
+                    'date_order' => $request->input('child-date_one'),
+                    'inspection_remarks' => $request->input('inspection_one'),
+                    'production_manager_remarks' => $request->input('pm_remarks_one'),
+                    'eta_child' => $request->input('eta_one'),
+                    'ata_child' => $request->input('ata_one'),
+                ]);
+            }
+
+            if ($request->has('child-name_two')) {
+                $production_request_child_element->update([
+                    'name' => $request->input('child-name_two'),
+                    'quantity' => $request->input('child-qty_two'),
+                    'unit_price' => $request->input('child-unit-price_two'),
+                    'total_price' => $request->input('child-total-price_two'),
+                    'image' => $request->file('child-image_two') ? $request->file('child-image_two')->store('child_images/' . $order_id . '/' . $request->input('child-item-id'), 'public') : $production_request_child_element->image,
+                    'date_order' => $request->input('child-date_two'),
+                    'inspection_remarks' => $request->input('inspection_two'),
+                    'production_manager_remarks' => $request->input('pm_remarks_two'),
+                    'eta_child' => $request->input('eta_two'),
+                    'ata_child' => $request->input('ata_two'),
+                ]);
+            }
         }
 
         return redirect()->back()->with('success', 'All child elements data updated successfully.');
@@ -182,7 +272,7 @@ class ProductionController extends Controller
 
             $selectedChildId = null;
 
-            switch($child_id){
+            switch ($child_id) {
                 case 157:
                     $selectedChildId = 1;
                     break;
