@@ -12,6 +12,7 @@ use App\Models\ProductChildElement;
 use App\Models\Product;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductionController extends Controller
 {
@@ -85,10 +86,32 @@ class ProductionController extends Controller
             'child-date' => 'required|date', //ordered date
             'inspection' => 'required|string|max:1000',
             'pm_remarks' => 'required|string|max:1000',
-            'eta' => 'nullable|date|before_or_equal:ata',
+            'eta' => 'nullable|date',
             'ata' => 'nullable|date|after_or_equal:eta',
         ]);
 
+        // $validator = Validator::make($request->all(), [
+        //     'order_id' => 'required|integer|exists:production_requests,id',
+        //     'product_child_element_id' => 'required|integer',
+        //     'child-name' => 'required|string|max:255',
+        //     'product_id' => 'required|integer|exists:products,id',
+        //     'child-qty' => 'required|integer|min:1',
+        //     'child-unit-price' => 'required|numeric|min:0',
+        //     'child-total-price' => 'required|numeric|min:0',
+        //     'child-image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'child-date' => 'required|date', //ordered date
+        //     'inspection' => 'required|string|max:1000',
+        //     'pm_remarks' => 'required|string|max:1000',
+        //     'eta' => 'nullable|date|before_or_equal:ata',
+        //     'ata' => 'nullable|date|after_or_equal:eta',
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'errors' => $validator->errors()
+        //     ], 422);
+        // }
 
         $order_id = $request->input('order_id');
 

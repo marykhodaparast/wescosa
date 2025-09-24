@@ -517,7 +517,7 @@
             </div>
         </div>
 
-         <div class="modal fade" id="qrModal-three" tabindex="-1">
+        <div class="modal fade" id="qrModal-three" tabindex="-1">
             <div class="modal-dialog modal-sm modal-dialog-centered">
                 <!-- Changed to modal-sm -->
                 <div class="modal-content p-2">
@@ -543,7 +543,7 @@
             </div>
         </div>
 
-         <div class="modal fade" id="qrModal-four" tabindex="-1">
+        <div class="modal fade" id="qrModal-four" tabindex="-1">
             <div class="modal-dialog modal-sm modal-dialog-centered">
                 <!-- Changed to modal-sm -->
                 <div class="modal-content p-2">
@@ -625,6 +625,22 @@
 
         <div class="overlay-one"></div>
         <div class="modal-right-one">
+            @if ($errors->any())
+                <div class="alert alert-danger" style="font-size:0.8rem !important;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        document.querySelector('.modal-right-one')?.classList.add('show');
+                        document.querySelector('.overlay-one')?.classList.add('show');
+                    });
+                </script>
+            @endif
+
             @php
                 $product_child_element_id =
                     App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id ?? 0;
@@ -670,9 +686,12 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-one"
-                                name="child-qty" value="{{ $production_request_child_element?->quantity }}"
+                                name="child-qty" value="{{ old('child-qty', $production_request_child_element?->quantity) }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
+                        {{-- @error('child-qty')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror --}}
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
@@ -791,15 +810,15 @@
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-two" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                name="child-unit-price" value="{{ $production_request_child_element?->unit_price }}"
-                                class="form-control"
+                        <span id="child-unit-price-two" style="font-size: 10px;font-weight: 700;"><input
+                                type="text" name="child-unit-price"
+                                value="{{ $production_request_child_element?->unit_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-two" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                name="child-total-price"
+                        <span id="child-total-price-two" style="font-size: 10px;font-weight: 700;"><input
+                                type="text" name="child-total-price"
                                 value="{{ $production_request_child_element?->total_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -870,7 +889,7 @@
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
-                    <div class="col-8"> <span class="fs-6" ><input type="text" id="child-name-three"
+                    <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-three"
                                 name="child-name" placeholder="Child Name"
                                 value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
                     </div>
@@ -899,22 +918,22 @@
                 <div class="row">
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
-                        <span  style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-three"
+                        <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-three"
                                 name="child-qty" value="{{ $production_request_child_element?->quantity }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-three" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                name="child-unit-price" value="{{ $production_request_child_element?->unit_price }}"
-                                class="form-control"
+                        <span id="child-unit-price-three" style="font-size: 10px;font-weight: 700;"><input
+                                type="text" name="child-unit-price"
+                                value="{{ $production_request_child_element?->unit_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-three" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                name="child-total-price"
+                        <span id="child-total-price-three" style="font-size: 10px;font-weight: 700;"><input
+                                type="text" name="child-total-price"
                                 value="{{ $production_request_child_element?->total_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -1021,15 +1040,15 @@
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-four" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                name="child-unit-price" value="{{ $production_request_child_element?->unit_price }}"
-                                class="form-control"
+                        <span id="child-unit-price-four" style="font-size: 10px;font-weight: 700;"><input
+                                type="text" name="child-unit-price"
+                                value="{{ $production_request_child_element?->unit_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-four" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                name="child-total-price"
+                        <span id="child-total-price-four" style="font-size: 10px;font-weight: 700;"><input
+                                type="text" name="child-total-price"
                                 value="{{ $production_request_child_element?->total_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -1134,15 +1153,15 @@
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-five" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                name="child-unit-price" value="{{ $production_request_child_element?->unit_price }}"
-                                class="form-control"
+                        <span id="child-unit-price-five" style="font-size: 10px;font-weight: 700;"><input
+                                type="text" name="child-unit-price"
+                                value="{{ $production_request_child_element?->unit_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-five" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                name="child-total-price"
+                        <span id="child-total-price-five" style="font-size: 10px;font-weight: 700;"><input
+                                type="text" name="child-total-price"
                                 value="{{ $production_request_child_element?->total_price }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -1212,16 +1231,22 @@
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+
                 <div class="row">
-                    <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-six"
-                                name="child-name" placeholder="Child Name"
-                                value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
+                    <div class="col-8">
+                        <span class="fs-6">
+                            <input type="text" id="child-name-six" name="child-name" placeholder="Child Name"
+                                value="{{ old('child-name', $production_request_child_element?->name) }}"
+                                class="form-control" />
+                        </span>
+                        @error('child-name')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="col-4">
                         <button type="button" class="close-six">X</button>
                     </div>
-
                 </div>
 
                 <div class="card">
@@ -1234,77 +1259,111 @@
                         @else
                             <input type="file" class="form-control" id="child-image-six" name="child-image"
                                 style="font-size:0.7rem !important" />
+                            @error('child-image')
+                                <div class="text-danger small">{{ $message }}</div>
+                            @enderror
                         @endif
-                        {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
-                        <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-six"
-                                name="child-qty" value="{{ $production_request_child_element?->quantity }}"
-                                class="form-control"
-                                style="width:40px !important;font-size:0.7rem !important" /></span>
+                        <span style="font-size: 10px;font-weight: 700;">
+                            <input type="text" id="child-qty-six" name="child-qty"
+                                value="{{ old('child-qty', $production_request_child_element?->quantity) }}"
+                                class="form-control" style="width:40px !important;font-size:0.7rem !important" />
+                        </span>
+                        @error('child-qty')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
+
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-six" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                name="child-unit-price" value="{{ $production_request_child_element?->unit_price }}"
-                                class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-unit-price-six" style="font-size: 10px;font-weight: 700;">
+                            <input type="text" name="child-unit-price"
+                                value="{{ old('child-unit-price', $production_request_child_element?->unit_price) }}"
+                                class="form-control" style="width:60px !important;font-size:0.7rem !important" />
+                        </span>
+                        @error('child-unit-price')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
+
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-six" style="font-size: 10px;font-weight: 700;"><input type="text"
-                                name="child-total-price"
-                                value="{{ $production_request_child_element?->total_price }}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-total-price-six" style="font-size: 10px;font-weight: 700;">
+                            <input type="text" name="child-total-price"
+                                value="{{ old('child-total-price', $production_request_child_element?->total_price) }}"
+                                class="form-control" style="width:60px !important;font-size:0.7rem !important" />
+                        </span>
+                        @error('child-total-price')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
-                        <span id="child-date-six" style="font-size: 10px !important;"><input type="date"
-                                name="child-date" class="form-control"
-                                value="{{ $production_request_child_element?->date_order }}"
-                                style="font-size: 0.7rem !important;" /></span>
+                        <span id="child-date-six" style="font-size: 10px !important;">
+                            <input type="date" name="child-date" class="form-control"
+                                value="{{ old('child-date', $production_request_child_element?->date_order) }}"
+                                style="font-size: 0.7rem !important;" />
+                        </span>
+                        @error('child-date')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
-
-
 
                 <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
                     <input type="date" class="form-control" id="eta-six" name="eta"
-                        value="{{ $production_request_child_element?->eta_child }}" style="font-size: 0.7rem;">
+                        value="{{ old('eta', $production_request_child_element?->eta_child) }}"
+                        style="font-size: 0.7rem;">
+                    @error('eta')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">ATA</label>
                     <input type="date" class="form-control" id="ata-six" name="ata"
-                        value="{{ $production_request_child_element?->ata_child }}" style="font-size: 0.7rem;">
+                        value="{{ old('ata', $production_request_child_element?->ata_child) }}"
+                        style="font-size: 0.7rem;">
+                    @error('ata')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group mb-2">
                     <label style="font-size: 12px;">Inspection Remarks</label>
                     <input type="text" class="form-control" id="inspection-six" name="inspection"
-                        value="{{ $production_request_child_element?->inspection_remarks }}"
+                        value="{{ old('inspection', $production_request_child_element?->inspection_remarks) }}"
                         style="font-size: 0.7rem;">
+                    @error('inspection')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group mb-3">
                     <label style="font-size: 12px;">Production Manager Remarks</label>
                     <input type="text" class="form-control" id="pm-remarks-six" name="pm_remarks"
-                        value="{{ $production_request_child_element?->production_manager_remarks }}"
+                        value="{{ old('pm_remarks', $production_request_child_element?->production_manager_remarks) }}"
                         style="font-size: 0.7rem;">
+                    @error('pm_remarks')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary mt-2" id="saveBtn6" disabled>Save Changes</button>
                 <button type="button" id="qr-btn6" class="btn btn-success mt-2"
                     onclick="handleQRClick(6)">Generate QR</button>
             </form>
+
+
         </div>
     </main>
     <script id="childJson" type="application/json">
@@ -1590,13 +1649,13 @@
             } else if (number == 3) {
                 document.getElementById('qrImage-three').src = qrUrl;
                 new bootstrap.Modal(document.getElementById('qrModal-three')).show();
-            }else if (number == 4) {
+            } else if (number == 4) {
                 document.getElementById('qrImage-four').src = qrUrl;
                 new bootstrap.Modal(document.getElementById('qrModal-four')).show();
-            }else if (number == 5) {
+            } else if (number == 5) {
                 document.getElementById('qrImage-five').src = qrUrl;
                 new bootstrap.Modal(document.getElementById('qrModal-five')).show();
-            }else if (number == 6) {
+            } else if (number == 6) {
                 document.getElementById('qrImage-six').src = qrUrl;
                 new bootstrap.Modal(document.getElementById('qrModal-six')).show();
             }
@@ -1624,15 +1683,15 @@
 
                     if (number == 1) {
                         modalContent = document.querySelector('#qrModal-one .modal-content');
-                    } else if(number == 2) {
+                    } else if (number == 2) {
                         modalContent = document.querySelector('#qrModal-two .modal-content');
-                    } else if(number == 3) {
+                    } else if (number == 3) {
                         modalContent = document.querySelector('#qrModal-three .modal-content');
-                    }else if(number == 4) {
+                    } else if (number == 4) {
                         modalContent = document.querySelector('#qrModal-four .modal-content');
-                    }else if(number == 5) {
+                    } else if (number == 5) {
                         modalContent = document.querySelector('#qrModal-five .modal-content');
-                    }else if(number == 6) {
+                    } else if (number == 6) {
                         modalContent = document.querySelector('#qrModal-six .modal-content');
                     }
 
@@ -1720,8 +1779,6 @@
 
         }
     </script>
-
-
 
     <script>
         // ✅ Main Logic to Load Sidebar Data
@@ -2056,7 +2113,6 @@
             const form = document.querySelector("#saveBtn1").closest("form");
             const saveBtn = document.getElementById("saveBtn1");
 
-
             const initialValues = {};
             Array.from(form.elements).forEach(el => {
                 if (el.name) {
@@ -2073,7 +2129,31 @@
                 });
                 saveBtn.disabled = !changed;
             });
+
+            // ✅ Prevent default submit & allow showing validation errors
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+
+                // You can now run your custom validation logic here:
+                let hasError = false;
+
+                Array.from(form.elements).forEach(el => {
+                    if (el.required && !el.value.trim()) {
+                        hasError = true;
+                        el.classList.add("border-red-500"); // example styling
+                    } else {
+                        el.classList.remove("border-red-500");
+                    }
+                });
+
+                if (!hasError) {
+                    // If no validation errors -> submit form manually
+                    form.submit();
+                }
+            });
         });
+
+
 
 
         // ✅ Enable Save button only if form changes
