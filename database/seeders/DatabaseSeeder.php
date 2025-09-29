@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
 
         $found = User::where('name', 'admin')->where('email', 'admin@example.com')->first();
         if (!$found) {
-            User::factory()->firstOrCreate([
+            User::firstOrCreate([
                 'name' => 'admin',
                 'email' => 'admin@example.com',
                 'password' => bcrypt('password123'),
