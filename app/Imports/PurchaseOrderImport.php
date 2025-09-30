@@ -21,6 +21,10 @@ class PurchaseOrderImport implements ToModel, WithStartRow
     }
     public function model(array $row)
     {
+        if (ProductionRequest::where('po_number', $row[2])->exists()) {
+            return null; // این ردیف رو رد کن
+        }
+
         if($row[9] === '—' || $row[9] === '-' || $row[9] === null) {
             $atd = null;
         } else {
