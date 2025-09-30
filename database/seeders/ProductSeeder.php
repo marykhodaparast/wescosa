@@ -34,6 +34,27 @@ class ProductSeeder extends Seeder
             ["category_id" => 9, "name" => 'RCCB 63A', "description" => "Residual Current Circuit Breaker 63A DP", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
             ["category_id" => 10, "name" => 'Digital Voltmeter', "description" => "Panel mount digital voltmeter 0- 500V", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
             ["category_id" => 10, "name" => 'Energy Meter', "description" => "Three-phase digital energy meter with RS485", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '125A Isolator Switch', "description" => "125A Isolator Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '100A Changeover Switch', "description" => "100A Changeover Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 2, "name" => '250A Molded Case Circuit Breaker', "description" => "250A Molded Case Circuit Breaker", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 3, "name" => '32A Distribution Board', "description" => "32A Distribution Board", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 2, "name" => '16A Miniature Circuit Breaker', "description" => "16A Miniature Circuit Breaker", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '100A Main Switch', "description" => "100A Main Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '63A Main Switch', "description" => "63A Main Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 3, "name" => '63A Distribution Board', "description" => "63A Distribution Board", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '250A Isolator Switch', "description" => "250A Isolator Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 2, "name" => '32A Miniature Circuit Breaker', "description" => "32A Miniature Circuit Breaker", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 2, "name" => '125A Molded Case Circuit Breaker', "description" => "125A Molded Case Circuit Breaker", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '200A Changeover Switch', "description" => "200A Changeover Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '160A Main Switch', "description" => "160A Main Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '100A Isolator Switch', "description" => "100A Isolator Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 2, "name" => '400A Molded Case Circuit Breaker', "description" => "400A Molded Case Circuit Breaker", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 2, "name" => '10A Miniature Circuit Breaker', "description" => "10A Miniature Circuit Breaker", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '63A Changeover Switch', "description" => "63A Changeover Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '200A Main Switch', "description" => "200A Main Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 3, "name" => '125A Distribution Board', "description" => "125A Distribution Board", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+            ["category_id" => 1, "name" => '200A Isolator Switch', "description" => "200A Isolator Switch", "price" => 0.00, "created_at" => now(), "updated_at" => now()],
+
         ];
 
 
