@@ -693,8 +693,9 @@
                             <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
                                 alt="Child Image" width="258px" height="120px">
                         @else
-                            <input type="file" class="form-control" id="child-image-one" name="child-image_one"
-                                style="font-size:0.7rem !important" />
+                            {{-- <input type="file" class="form-control" id="child-image-one" name="child-image_one"
+                                style="font-size:0.7rem !important" /> --}}
+                            <img id="child-image-one" src="" alt="Circuit diagram" height="120px">
                         @endif
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
@@ -705,25 +706,22 @@
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-one"
                                 name="child-qty_one"
-                                value="{{ old('child-qty_one', $production_request_child_element?->quantity) }}"
+                                value="{{ old('child-qty_one', isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0) }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
-                        {{-- @error('child-qty')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror --}}
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-one" style="font-size: 10px;font-weight: 700;"><input
                                 type="text" name="child-unit-price_one"
-                                value="{{ $production_request_child_element?->unit_price }}" class="form-control"
+                                value="{{ isset($production_request_child_element->unit_price) ? $production_request_child_element->unit_price : 0 }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-one" style="font-size: 10px;font-weight: 700;"><input
                                 type="text" name="child-total-price_one"
-                                value="{{ $production_request_child_element?->total_price }}" class="form-control"
+                                value="{{ isset($production_request_child_element->total_price) ? $production_request_child_element->total_price : 0 }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                 </div>
@@ -843,12 +841,12 @@
                         @if ($production_request_child_element && $production_request_child_element->image)
                             <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
                                 alt="Child Image" width="258px" height="120px">
-                        @elseif($production_request_child_element && $production_request_child_element->image === null)
+                        @else{{--if($production_request_child_element && $production_request_child_element->image === null)--}}
                             <img id="child-image-two" src="" alt="Circuit diagram" height="120px">
-                        @else
-                            <input type="file" class="form-control" id="child-image-two" name="child-image_two"
-                                style="font-size:0.7rem !important" />
                         @endif
+                            {{-- <input type="file" class="form-control" id="child-image-two" name="child-image_two"
+                                style="font-size:0.7rem !important" />
+                        @endif --}}
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
                 </div>
@@ -857,7 +855,7 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-two"
-                                name="child-qty_two" value="{{ $production_request_child_element?->quantity }}"
+                                name="child-qty_two" value="{{ isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0 }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -865,14 +863,14 @@
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-two" style="font-size: 10px;font-weight: 700;"><input
                                 type="text" name="child-unit-price_two"
-                                value="{{ $production_request_child_element?->unit_price }}" class="form-control"
+                                value="{{ isset($production_request_child_element->unit_price) ?  $production_request_child_element->unit_price : 0}}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-two" style="font-size: 10px;font-weight: 700;"><input
                                 type="text" name="child-total-price_two"
-                                value="{{ $production_request_child_element?->total_price }}" class="form-control"
+                                value="{{ isset($production_request_child_element?->total_price) ? $production_request_child_element?->total_price : 0 }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                 </div>
@@ -991,12 +989,13 @@
                         @if ($production_request_child_element && $production_request_child_element->image)
                             <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
                                 alt="Child Image" width="258px" height="120px">
-                        @elseif($production_request_child_element && $production_request_child_element->image === null)
+                        @else{{--if($production_request_child_element && $production_request_child_element->image === null)--}}
                             <img id="child-image-three" src="" alt="Circuit diagram" height="120px">
-                        @else
+                        @endif
+                        {{-- @else
                             <input type="file" class="form-control" id="child-image-three"
                                 name="child-image_three" style="font-size:0.7rem !important" />
-                        @endif
+                        @endif --}}
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
                 </div>
@@ -1005,7 +1004,7 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-three"
-                                name="child-qty_three" value="{{ $production_request_child_element?->quantity }}"
+                                name="child-qty_three" value="{{ isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0}}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -1013,14 +1012,14 @@
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-three" style="font-size: 10px;font-weight: 700;"><input
                                 type="text" name="child-unit-price_three"
-                                value="{{ $production_request_child_element?->unit_price }}" class="form-control"
+                                value="{{ isset($production_request_child_element->unit_price) ? $production_request_child_element->unit_price : 0 }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-three" style="font-size: 10px;font-weight: 700;"><input
                                 type="text" name="child-total-price_three"
-                                value="{{ $production_request_child_element?->total_price }}" class="form-control"
+                                value="{{ isset($production_request_child_element->total_price) ? $production_request_child_element->total_price : 0 }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                 </div>
@@ -1140,11 +1139,11 @@
                         @if ($production_request_child_element && $production_request_child_element->image)
                             <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
                                 alt="Child Image" width="258px" height="120px">
-                        @elseif($production_request_child_element && $production_request_child_element->image === null)
+                        @else{{--if($production_request_child_element && $production_request_child_element->image === null)--}}
                             <img id="child-image-four" src="" alt="Circuit diagram" height="120px">
-                        @else
+                        {{-- @else
                             <input type="file" class="form-control" id="child-image-four" name="child-image_four"
-                                style="font-size:0.7rem !important" />
+                                style="font-size:0.7rem !important" /> --}}
                         @endif
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
@@ -1154,7 +1153,7 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-four"
-                                name="child-qty_four" value="{{ $production_request_child_element?->quantity }}"
+                                name="child-qty_four" value="{{ isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0 }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -1162,14 +1161,14 @@
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-four" style="font-size: 10px;font-weight: 700;"><input
                                 type="text" name="child-unit-price_four"
-                                value="{{ $production_request_child_element?->unit_price }}" class="form-control"
+                                value="{{ isset($production_request_child_element->unit_price) ? $production_request_child_element->unit_price : 0 }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-four" style="font-size: 10px;font-weight: 700;"><input
                                 type="text" name="child-total-price_four"
-                                value="{{ $production_request_child_element?->total_price }}" class="form-control"
+                                value="{{ isset($production_request_child_element?->total_price) ? $production_request_child_element?->total_price : 0 }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                 </div>
@@ -1287,11 +1286,10 @@
                         @if ($production_request_child_element && $production_request_child_element->image)
                             <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
                                 alt="Child Image" width="258px" height="120px">
-                        @elseif($production_request_child_element && $production_request_child_element->image === null)
+                        @else{{--if($production_request_child_element && $production_request_child_element->image === null)--}}
                             <img id="child-image-five" src="" alt="Circuit diagram" height="120px">
-                        @else
-                            <input type="file" class="form-control" id="child-image-five" name="child-image_five"
-                                style="font-size:0.7rem !important" />
+                            {{-- <input type="file" class="form-control" id="child-image-five" name="child-image_five"
+                                style="font-size:0.7rem !important" /> --}}
                         @endif
                         {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
@@ -1301,7 +1299,7 @@
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-five"
-                                name="child-qty_five" value="{{ $production_request_child_element?->quantity }}"
+                                name="child-qty_five" value="{{ isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0 }}"
                                 class="form-control"
                                 style="width:40px !important;font-size:0.7rem !important" /></span>
                     </div>
@@ -1309,14 +1307,14 @@
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-five" style="font-size: 10px;font-weight: 700;"><input
                                 type="text" name="child-unit-price_five"
-                                value="{{ $production_request_child_element?->unit_price }}" class="form-control"
+                                value="{{ isset($production_request_child_element->unit_price) ? $production_request_child_element->unit_price : 0 }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-five" style="font-size: 10px;font-weight: 700;"><input
                                 type="text" name="child-total-price_five"
-                                value="{{ $production_request_child_element?->total_price }}" class="form-control"
+                                value="{{ isset($production_request_child_element->total_price) ? $production_request_child_element->total_price : 0 }}" class="form-control"
                                 style="width:60px !important;font-size:0.7rem !important" /></span>
                     </div>
                 </div>
@@ -1442,14 +1440,14 @@
                         @if ($production_request_child_element && $production_request_child_element->image)
                             <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
                                 alt="Child Image" width="258px" height="120px">
-                        @elseif($production_request_child_element && $production_request_child_element->image === null)
+                        @else{{--if($production_request_child_element && $production_request_child_element->image === null)--}}
                             <img id="child-image-six" src="" alt="Circuit diagram" height="120px">
-                        @else
+                        {{-- @else
                             <input type="file" class="form-control" id="child-image-six" name="child-image_six"
                                 style="font-size:0.7rem !important" />
                             @error('child-image')
                                 <div class="text-danger small">{{ $message }}</div>
-                            @enderror
+                            @enderror --}}
                         @endif
                     </div>
                 </div>
@@ -1459,7 +1457,7 @@
                         <span style="font-size: 10px;">QUANTITY</span><br>
                         <span style="font-size: 10px;font-weight: 700;">
                             <input type="text" id="child-qty-six" name="child-qty_six"
-                                value="{{ old('child-qty', $production_request_child_element?->quantity) }}"
+                                value="{{ old('child-qty', isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0) }}"
                                 class="form-control" style="width:40px !important;font-size:0.7rem !important" />
                         </span>
                         @error('child-qty')
@@ -1471,7 +1469,7 @@
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
                         <span id="child-unit-price-six" style="font-size: 10px;font-weight: 700;">
                             <input type="text" name="child-unit-price_six"
-                                value="{{ old('child-unit-price', $production_request_child_element?->unit_price) }}"
+                                value="{{ old('child-unit-price', isset($production_request_child_element->unit_price) ? $production_request_child_element->unit_price : 0) }}"
                                 class="form-control" style="width:60px !important;font-size:0.7rem !important" />
                         </span>
                         @error('child-unit-price')
@@ -1483,7 +1481,7 @@
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
                         <span id="child-total-price-six" style="font-size: 10px;font-weight: 700;">
                             <input type="text" name="child-total-price_six"
-                                value="{{ old('child-total-price', $production_request_child_element?->total_price) }}"
+                                value="{{ old('child-total-price', isset($production_request_child_element->total_price) ? $production_request_child_element->total_price : 0) }}"
                                 class="form-control" style="width:60px !important;font-size:0.7rem !important" />
                         </span>
                         @error('child-total-price')
@@ -2032,7 +2030,7 @@
 
                     // Fill modal fields
                     localStorage.setItem("childImageOne", child.image || "");
-                    document.getElementById("child-image").src = child.image ||
+                    document.getElementById("child-image-one").src = child.image ||
                         "/static/images/no_image.png";
                 });
             });
