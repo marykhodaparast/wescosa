@@ -22,7 +22,7 @@ class PurchaseOrderImport implements ToModel, WithStartRow
     public function model(array $row)
     {
         if (ProductionRequest::where('po_number', $row[2])->exists()) {
-            return null; // این ردیف رو رد کن
+            return null;
         }
 
         if($row[9] === '—' || $row[9] === '-' || $row[9] === null) {
@@ -37,11 +37,11 @@ class PurchaseOrderImport implements ToModel, WithStartRow
             'product_name_id'     => Product::where('name', $row[3])->value('id') ?? 0,
             'project_name'     => $row[12] ?? null,
             'customer'         => $row[4] ?? null,
-            // 'no_of_structures' => $row['no_of_structures'] ?? null,
-            // 'no_of_workers'    => $row['no_of_workers'] ?? null,
-            // 'feeders'          => $row['feeders'] ?? null,
-            // 'main'             => $row['main'] ?? null,
-            // 'tie'              => $row['tie'] ?? null,
+            'no_of_structures' => rand(1,30),
+            'no_of_workers'    => rand(1,30),
+            'feeders'          => rand(1,30),
+            'main'             => rand(1,30),
+            'tie'              => rand(1,30),
             // 'start_date'   => isset($row['start_date']) ? $this->transformDate($row['start_date']) : null,
             // 'end_date'     => isset($row['end_date']) ? $this->transformDate($row['end_date']) : null,
             'request_date' => $this->transformDate($row[7] ?? null),

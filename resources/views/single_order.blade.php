@@ -664,7 +664,7 @@
                     App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id ?? 0;
 
                 $production_request_child_element = App\Models\ProductionRequestChildElement::where('po_id', $data->id)
-                    ->where('child_element_id', $product_child_element_id)
+                    ->where('child_element_id', 1)
                     ->first();
 
             @endphp
@@ -676,12 +676,10 @@
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
-                    <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-one"
-                                name="child-name_one" placeholder="Child Name"
-                                value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
+                    <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-3">
                         <button type="button" class="close-one">X</button>
                     </div>
 
@@ -690,50 +688,37 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
-                                alt="Child Image" width="258px" height="120px">
+                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                                width="258px" height="120px">
                         @else
-                            {{-- <input type="file" class="form-control" id="child-image-one" name="child-image_one"
-                                style="font-size:0.7rem !important" /> --}}
                             <img id="child-image-one" src="" alt="Circuit diagram" height="120px">
                         @endif
-                        {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
-                        <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-one"
-                                name="child-qty_one"
-                                value="{{ old('child-qty_one', isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0) }}"
-                                class="form-control"
-                                style="width:40px !important;font-size:0.7rem !important" /></span>
+                        <span
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->quantity }}</span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-one" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-unit-price_one"
-                                value="{{ isset($production_request_child_element->unit_price) ? $production_request_child_element->unit_price : 0 }}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-unit-price-one"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->unit_price }}</span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-one" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-total-price_one"
-                                value="{{ isset($production_request_child_element->total_price) ? $production_request_child_element->total_price : 0 }}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-total-price-one"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->total_price }}</span>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
-                        <span id="child-date-one" style="font-size: 10px !important;"><input type="date"
-                                name="child-date_one" class="form-control"
-                                value="{{ $production_request_child_element?->date_order }}"
-                                style="font-size: 0.7rem !important;" />
-                        </span>
+                        <span id="child-date-one"
+                            style="font-size: 10px !important;">{{ $production_request_child_element?->date_order_formatted }}</span>
                     </div>
                 </div>
 
@@ -810,7 +795,7 @@
                     App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id + 1 ?? 0;
 
                 $production_request_child_element = App\Models\ProductionRequestChildElement::where('po_id', $data->id)
-                    ->where('child_element_id', $product_child_element_id)
+                    ->where('child_element_id', 2)
                     ->first();
 
             @endphp
@@ -825,12 +810,10 @@
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
-                    <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-two"
-                                name="child-name_two" placeholder="Child Name"
-                                value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
+                    <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-3">
                         <button type="button" class="close-two">X</button>
                     </div>
 
@@ -839,53 +822,39 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
-                                alt="Child Image" width="258px" height="120px">
-                        @else{{--if($production_request_child_element && $production_request_child_element->image === null)--}}
+                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                                width="258px" height="120px">
+                        @else
                             <img id="child-image-two" src="" alt="Circuit diagram" height="120px">
                         @endif
-                            {{-- <input type="file" class="form-control" id="child-image-two" name="child-image_two"
-                                style="font-size:0.7rem !important" />
-                        @endif --}}
-                        {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
-                        <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-two"
-                                name="child-qty_two" value="{{ isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0 }}"
-                                class="form-control"
-                                style="width:40px !important;font-size:0.7rem !important" /></span>
+                        <span
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->quantity }}</span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-two" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-unit-price_two"
-                                value="{{ isset($production_request_child_element->unit_price) ?  $production_request_child_element->unit_price : 0}}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-unit-price-two"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->unit_price }}</span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-two" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-total-price_two"
-                                value="{{ isset($production_request_child_element?->total_price) ? $production_request_child_element?->total_price : 0 }}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-total-price-two"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->total_price }}</span>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
-                        <span id="child-date-two" style="font-size: 10px !important;"><input type="date"
-                                name="child-date_two" class="form-control"
-                                value="{{ $production_request_child_element?->date_order }}"
-                                style="font-size: 0.7rem !important;" /></span>
+                        <span id="child-date-two"
+                            style="font-size: 10px !important;">{{ $production_request_child_element?->date_order_formatted }}</span>
                     </div>
                 </div>
-
-
 
                 <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
@@ -960,7 +929,7 @@
                     App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id + 2 ?? 0;
 
                 $production_request_child_element = App\Models\ProductionRequestChildElement::where('po_id', $data->id)
-                    ->where('child_element_id', $product_child_element_id)
+                    ->where('child_element_id', 3)
                     ->first();
 
             @endphp
@@ -973,12 +942,10 @@
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
-                    <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-three"
-                                name="child-name_three" placeholder="Child Name"
-                                value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
+                    <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-3">
                         <button type="button" class="close-three">X</button>
                     </div>
 
@@ -987,54 +954,39 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
-                                alt="Child Image" width="258px" height="120px">
-                        @else{{--if($production_request_child_element && $production_request_child_element->image === null)--}}
+                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                                width="258px" height="120px">
+                        @else
                             <img id="child-image-three" src="" alt="Circuit diagram" height="120px">
                         @endif
-                        {{-- @else
-                            <input type="file" class="form-control" id="child-image-three"
-                                name="child-image_three" style="font-size:0.7rem !important" />
-                        @endif --}}
-                        {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
-                        <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-three"
-                                name="child-qty_three" value="{{ isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0}}"
-                                class="form-control"
-                                style="width:40px !important;font-size:0.7rem !important" /></span>
+                        <span
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->quantity }}</span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-three" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-unit-price_three"
-                                value="{{ isset($production_request_child_element->unit_price) ? $production_request_child_element->unit_price : 0 }}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-unit-price-three"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->unit_price }}</span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-three" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-total-price_three"
-                                value="{{ isset($production_request_child_element->total_price) ? $production_request_child_element->total_price : 0 }}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-total-price-three"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->total_price }}</span>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
-                        <span id="child-date-three" style="font-size: 10px !important;"><input type="date"
-                                name="child-date_three" class="form-control"
-                                value="{{ $production_request_child_element?->date_order }}"
-                                style="font-size: 0.7rem !important;" /></span>
+                        <span id="child-date-three"
+                            style="font-size: 10px !important;">{{ $production_request_child_element?->date_order_formatted }}</span>
                     </div>
                 </div>
-
-
 
                 <div class="form-group mt-2 mb-2">
                     <label style="font-size: 12px;">ETA</label>
@@ -1110,7 +1062,7 @@
                     App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id + 3 ?? 0;
 
                 $production_request_child_element = App\Models\ProductionRequestChildElement::where('po_id', $data->id)
-                    ->where('child_element_id', $product_child_element_id)
+                    ->where('child_element_id', 4)
                     ->first();
 
             @endphp
@@ -1123,12 +1075,10 @@
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
-                    <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-four"
-                                name="child-name_four" placeholder="Child Name"
-                                value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
+                    <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-3">
                         <button type="button" class="close-four">X</button>
                     </div>
 
@@ -1137,49 +1087,37 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
-                                alt="Child Image" width="258px" height="120px">
-                        @else{{--if($production_request_child_element && $production_request_child_element->image === null)--}}
+                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                                width="258px" height="120px">
+                        @else
                             <img id="child-image-four" src="" alt="Circuit diagram" height="120px">
-                        {{-- @else
-                            <input type="file" class="form-control" id="child-image-four" name="child-image_four"
-                                style="font-size:0.7rem !important" /> --}}
                         @endif
-                        {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
-                        <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-four"
-                                name="child-qty_four" value="{{ isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0 }}"
-                                class="form-control"
-                                style="width:40px !important;font-size:0.7rem !important" /></span>
+                        <span
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->quantity }}</span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-four" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-unit-price_four"
-                                value="{{ isset($production_request_child_element->unit_price) ? $production_request_child_element->unit_price : 0 }}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-unit-price-four"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->unit_price }}</span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-four" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-total-price_four"
-                                value="{{ isset($production_request_child_element?->total_price) ? $production_request_child_element?->total_price : 0 }}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-total-price-four"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->total_price }}</span>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
-                        <span id="child-date-four" style="font-size: 10px !important;"><input type="date"
-                                name="child-date_four" class="form-control"
-                                value="{{ $production_request_child_element?->date_order }}"
-                                style="font-size: 0.7rem !important;" /></span>
+                        <span id="child-date-four"
+                            style="font-size: 10px !important;">{{ $production_request_child_element?->date_order_formatted }}</span>
                     </div>
                 </div>
 
@@ -1217,7 +1155,7 @@
 
         <div class="overlay-five"></div>
         <div class="modal-right-five">
-             @if ($errors->any() && count(array_filter($errors->keys(), fn($key) => str_ends_with($key, '_five'))) > 0)
+            @if ($errors->any() && count(array_filter($errors->keys(), fn($key) => str_ends_with($key, '_five'))) > 0)
                 <div class="alert alert-danger" style="font-size:0.8rem !important;">
                     <ul>
                         @foreach ($errors->keys() as $key)
@@ -1257,7 +1195,7 @@
                     App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id + 4 ?? 0;
 
                 $production_request_child_element = App\Models\ProductionRequestChildElement::where('po_id', $data->id)
-                    ->where('child_element_id', $product_child_element_id)
+                    ->where('child_element_id', 5)
                     ->first();
 
             @endphp
@@ -1270,12 +1208,10 @@
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
                 <div class="row">
-                    <div class="col-8"> <span class="fs-6"><input type="text" id="child-name-five"
-                                name="child-name_five" placeholder="Child Name"
-                                value="{{ $production_request_child_element?->name }}" class="form-control" /></span>
+                    <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-3">
                         <button type="button" class="close-five">X</button>
                     </div>
 
@@ -1284,48 +1220,37 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
-                                alt="Child Image" width="258px" height="120px">
-                        @else{{--if($production_request_child_element && $production_request_child_element->image === null)--}}
+                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                                width="258px" height="120px">
+                        @else
                             <img id="child-image-five" src="" alt="Circuit diagram" height="120px">
-                            {{-- <input type="file" class="form-control" id="child-image-five" name="child-image_five"
-                                style="font-size:0.7rem !important" /> --}}
                         @endif
-                        {{-- <img id="child-image" src="" alt="Circuit diagram" height="120px"> --}}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
-                        <span style="font-size: 10px;font-weight: 700;"><input type="text" id="child-qty-five"
-                                name="child-qty_five" value="{{ isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0 }}"
-                                class="form-control"
-                                style="width:40px !important;font-size:0.7rem !important" /></span>
+                        <span
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->quantity }}</span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-five" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-unit-price_five"
-                                value="{{ isset($production_request_child_element->unit_price) ? $production_request_child_element->unit_price : 0 }}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-unit-price-five"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->unit_price }}</span>
                     </div>
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-five" style="font-size: 10px;font-weight: 700;"><input
-                                type="text" name="child-total-price_five"
-                                value="{{ isset($production_request_child_element->total_price) ? $production_request_child_element->total_price : 0 }}" class="form-control"
-                                style="width:60px !important;font-size:0.7rem !important" /></span>
+                        <span id="child-total-price-five"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->total_price }}</span>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
-                        <span id="child-date-five" style="font-size: 10px !important;"><input type="date"
-                                name="child-date_five" class="form-control"
-                                value="{{ $production_request_child_element?->date_order }}"
-                                style="font-size: 0.7rem !important;" /></span>
+                        <span id="child-date-five"
+                            style="font-size: 10px !important;">{{ $production_request_child_element?->date_order_formatted }}</span>
                     </div>
                 </div>
 
@@ -1365,7 +1290,7 @@
 
         <div class="overlay-six"></div>
         <div class="modal-right-six">
-              @if ($errors->any() && count(array_filter($errors->keys(), fn($key) => str_ends_with($key, '_six'))) > 0)
+            @if ($errors->any() && count(array_filter($errors->keys(), fn($key) => str_ends_with($key, '_six'))) > 0)
                 <div class="alert alert-danger" style="font-size:0.8rem !important;">
                     <ul>
                         @foreach ($errors->keys() as $key)
@@ -1405,7 +1330,7 @@
                     App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id + 5 ?? 0;
 
                 $production_request_child_element = App\Models\ProductionRequestChildElement::where('po_id', $data->id)
-                    ->where('child_element_id', $product_child_element_id)
+                    ->where('child_element_id', 6)
                     ->first();
 
             @endphp
@@ -1418,36 +1343,23 @@
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
 
-                <div class="row">
-                    <div class="col-8">
-                        <span class="fs-6">
-                            <input type="text" id="child-name-six" name="child-name_six" placeholder="Child Name"
-                                value="{{ old('child-name', $production_request_child_element?->name) }}"
-                                class="form-control" />
-                        </span>
-                        {{-- @error('child-name')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
+               <div class="row">
+                    <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-3">
                         <button type="button" class="close-six">X</button>
                     </div>
+
                 </div>
 
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('storage/' . $production_request_child_element->image) }}"
-                                alt="Child Image" width="258px" height="120px">
-                        @else{{--if($production_request_child_element && $production_request_child_element->image === null)--}}
+                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                                width="258px" height="120px">
+                        @else
                             <img id="child-image-six" src="" alt="Circuit diagram" height="120px">
-                        {{-- @else
-                            <input type="file" class="form-control" id="child-image-six" name="child-image_six"
-                                style="font-size:0.7rem !important" />
-                            @error('child-image')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror --}}
                         @endif
                     </div>
                 </div>
@@ -1455,52 +1367,26 @@
                 <div class="row">
                     <div class="col-md-3">
                         <span style="font-size: 10px;">QUANTITY</span><br>
-                        <span style="font-size: 10px;font-weight: 700;">
-                            <input type="text" id="child-qty-six" name="child-qty_six"
-                                value="{{ old('child-qty', isset($production_request_child_element->quantity) ? $production_request_child_element->quantity : 0) }}"
-                                class="form-control" style="width:40px !important;font-size:0.7rem !important" />
-                        </span>
-                        @error('child-qty')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror
+                        <span
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->quantity }}</span>
                     </div>
-
                     <div class="col-md-4">
                         <span style="font-size: 10px;">UNIT PRICE</span><br>
-                        <span id="child-unit-price-six" style="font-size: 10px;font-weight: 700;">
-                            <input type="text" name="child-unit-price_six"
-                                value="{{ old('child-unit-price', isset($production_request_child_element->unit_price) ? $production_request_child_element->unit_price : 0) }}"
-                                class="form-control" style="width:60px !important;font-size:0.7rem !important" />
-                        </span>
-                        @error('child-unit-price')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror
+                        <span id="child-unit-price-six"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->unit_price }}</span>
                     </div>
-
                     <div class="col-md-4">
                         <span style="font-size: 10px;">TOTAL PRICE</span><br>
-                        <span id="child-total-price-six" style="font-size: 10px;font-weight: 700;">
-                            <input type="text" name="child-total-price_six"
-                                value="{{ old('child-total-price', isset($production_request_child_element->total_price) ? $production_request_child_element->total_price : 0) }}"
-                                class="form-control" style="width:60px !important;font-size:0.7rem !important" />
-                        </span>
-                        @error('child-total-price')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror
+                        <span id="child-total-price-six"
+                            style="font-size: 10px;font-weight: 700;">{{ $production_request_child_element?->total_price }}</span>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <span style="font-size: 10px;">ORDERED DATE</span><br>
-                        <span id="child-date-six" style="font-size: 10px !important;">
-                            <input type="date" name="child-date_six" class="form-control"
-                                value="{{ old('child-date', $production_request_child_element?->date_order) }}"
-                                style="font-size: 0.7rem !important;" />
-                        </span>
-                        @error('child-date')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror
+                        <span id="child-date-six"
+                            style="font-size: 10px !important;">{{ $production_request_child_element?->date_order_formatted }}</span>
                     </div>
                 </div>
 

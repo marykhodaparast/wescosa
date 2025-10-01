@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class ProductionRequestChildElement extends Model
 {
@@ -25,7 +26,12 @@ class ProductionRequestChildElement extends Model
         'production_manager_remarks',
         'qr',
     ];
-    
+
+    public function getDateOrderFormattedAttribute()
+    {
+        return Carbon::parse($this->date_order)->format('d-m-Y');
+    }
+
     public function product()
     {
         return $this->belongsTo(ProductionRequest::class, 'po_id');

@@ -74,14 +74,14 @@ class ProductionController extends Controller
     function merge_rules($rules, $suffix)
     {
         $output_rules = array_merge($rules, [
-            "child-name_{$suffix}"        => 'required|string|max:255',
-            "child-qty_{$suffix}"         => 'required|integer|min:1',
-            "child-unit-price_{$suffix}"  => 'required|numeric|min:0',
-            "child-total-price_{$suffix}" => 'required|numeric|min:0',
-            "child-image_{$suffix}"       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            "child-date_{$suffix}"        => 'required|date', // ordered date
-            "inspection_{$suffix}"        => 'required|string|max:1000',
-            "pm_remarks_{$suffix}"        => 'required|string|max:1000',
+            // "child-name_{$suffix}"        => 'required|string|max:255',
+            // "child-qty_{$suffix}"         => 'required|integer|min:1',
+            // "child-unit-price_{$suffix}"  => 'required|numeric|min:0',
+            // "child-total-price_{$suffix}" => 'required|numeric|min:0',
+            // "child-image_{$suffix}"       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // "child-date_{$suffix}"        => 'required|date', // ordered date
+            "inspection_{$suffix}"        => 'nullable|string|max:1000',
+            "pm_remarks_{$suffix}"        => 'nullable|string|max:1000',
             "eta_{$suffix}"               => 'nullable|date',
             "ata_{$suffix}"               => "nullable|date|after_or_equal:eta_{$suffix}",
         ]);
@@ -97,15 +97,15 @@ class ProductionController extends Controller
                 'child_element_id' => $request->input('product_child_element_id') != 0
                     ? $request->input('product_child_element_id')
                     : $product_child_element->id,
-                'name' => $request->input("child-name_{$suffix}"),
-                'quantity' => $request->input("child-qty_{$suffix}"),
-                'unit_price' => $request->input("child-unit-price_{$suffix}"),
-                'total_price' => $request->input("child-total-price_{$suffix}"),
-                'image' => $request->file("child-image_{$suffix}")
-                    ? $request->file("child-image_{$suffix}")
-                    ->store("child_images/{$order_id}/{$product_child_element->id}", 'public')
-                    : null,
-                'date_order' => $request->input("child-date_{$suffix}"),
+                // 'name' => $request->input("child-name_{$suffix}"),
+                // 'quantity' => $request->input("child-qty_{$suffix}"),
+                // 'unit_price' => $request->input("child-unit-price_{$suffix}"),
+                // 'total_price' => $request->input("child-total-price_{$suffix}"),
+                // 'image' => $request->file("child-image_{$suffix}")
+                //     ? $request->file("child-image_{$suffix}")
+                //     ->store("child_images/{$order_id}/{$product_child_element->id}", 'public')
+                //     : null,
+                // 'date_order' => $request->input("child-date_{$suffix}"),
                 'inspection_remarks' => $request->input("inspection_{$suffix}"),
                 'production_manager_remarks' => $request->input("pm_remarks_{$suffix}"),
                 'eta_child' => $request->input("eta_{$suffix}"),
@@ -118,15 +118,15 @@ class ProductionController extends Controller
     {
         if ($request->has("child-name_{$suffix}")) {
             $production_request_child_element->update([
-                'name' => $request->input("child-name_{$suffix}"),
-                'quantity' => $request->input("child-qty_{$suffix}"),
-                'unit_price' => $request->input("child-unit-price_{$suffix}"),
-                'total_price' => $request->input("child-total-price_{$suffix}"),
-                'image' => $request->file("child-image_{$suffix}")
-                    ? $request->file("child-image_{$suffix}")
-                    ->store("child_images/{$order_id}/" . $request->input("child-item-id"), 'public')
-                    : $production_request_child_element->image,
-                'date_order' => $request->input("child-date_{$suffix}"),
+                // 'name' => $request->input("child-name_{$suffix}"),
+                // 'quantity' => $request->input("child-qty_{$suffix}"),
+                // 'unit_price' => $request->input("child-unit-price_{$suffix}"),
+                // 'total_price' => $request->input("child-total-price_{$suffix}"),
+                // 'image' => $request->file("child-image_{$suffix}")
+                //     ? $request->file("child-image_{$suffix}")
+                //     ->store("child_images/{$order_id}/" . $request->input("child-item-id"), 'public')
+                //     : $production_request_child_element->image,
+                // 'date_order' => $request->input("child-date_{$suffix}"),
                 'inspection_remarks' => $request->input("inspection_{$suffix}"),
                 'production_manager_remarks' => $request->input("pm_remarks_{$suffix}"),
                 'eta_child' => $request->input("eta_{$suffix}"),
