@@ -223,7 +223,8 @@ class ProductionController extends Controller
     public function generateQR($id, $child_id)
     {
         try {
-            $qrData = 'http://127.0.0.1:8000/orders/single_order/' . $id;
+            //$qrData = 'http://127.0.0.1:8000/orders/single_order/' . $id;
+            $qrData = url('/orders/single_order/' . $id);
 
             $selectedChildId = null;
 
