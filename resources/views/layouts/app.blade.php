@@ -280,7 +280,7 @@
 
             <!-- Sidebar -->
             <nav class="col-md-2 sidebar d-flex flex-column" height="100vh">
-                <img class="ms-4" src="{{asset('logo.png')}}" alt="Logo" width="150" height="90">
+                <img class="ms-4" src="{{asset('Wescosa-logo.svg')}}" alt="Logo" width="120" height="90">
                 <a href="/dashboard">Dashboard</a>
                 <a href="/orders/po_list/">Purchase Orders</a>
                 <a href="#">Users</a>
