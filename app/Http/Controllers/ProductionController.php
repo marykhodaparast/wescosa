@@ -74,8 +74,8 @@ class ProductionController extends Controller
     function merge_rules($rules, $suffix)
     {
         $output_rules = array_merge($rules, [
-            // "child-name_{$suffix}"        => 'required|string|max:255',
-            // "child-qty_{$suffix}"         => 'required|integer|min:1',
+            //"child-name_{$suffix}"        => 'required|string|max:255',
+            //"child-qty_{$suffix}"         => 'required|integer|min:1',
             // "child-unit-price_{$suffix}"  => 'required|numeric|min:0',
             // "child-total-price_{$suffix}" => 'required|numeric|min:0',
             // "child-image_{$suffix}"       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -116,7 +116,7 @@ class ProductionController extends Controller
 
     function updateChildElement($request, $suffix, $production_request_child_element, $order_id)
     {
-        if ($request->has("child-name_{$suffix}")) {
+        if($request->has("child-name_{$suffix}")){
             $production_request_child_element->update([
                 // 'name' => $request->input("child-name_{$suffix}"),
                 // 'quantity' => $request->input("child-qty_{$suffix}"),

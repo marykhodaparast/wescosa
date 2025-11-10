@@ -675,6 +675,8 @@
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="child-name_one" id="child-name-one" value="{{ $production_request_child_element?->name }}"/>
+                <input type="hidden" name="child-qty_one" id="child-qty-one" value="{{ $production_request_child_element?->quantity }}"/>
                 <div class="row">
                     <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
@@ -688,7 +690,7 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                            <img id="child-image-one" src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
                                 width="258px" height="120px">
                         @else
                             <img id="child-image-one" src="" alt="Circuit diagram" height="120px">
@@ -809,6 +811,8 @@
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="child-name_two" id="child-name-two" value="{{ $production_request_child_element?->name }}"/>
+                <input type="hidden" name="child-qty_two" id="child-qty-two" value="{{ $production_request_child_element?->quantity }}"/>
                 <div class="row">
                     <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
@@ -822,7 +826,7 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                            <img id="child-image-two" src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
                                 width="258px" height="120px">
                         @else
                             <img id="child-image-two" src="" alt="Circuit diagram" height="120px">
@@ -941,6 +945,8 @@
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="child-name_three" id="child-name-three" value="{{ $production_request_child_element?->name }}"/>
+                <input type="hidden" name="child-qty_three" id="child-qty-three" value="{{ $production_request_child_element?->quantity }}"/>
                 <div class="row">
                     <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
@@ -954,7 +960,7 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                            <img id="child-image-three" src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
                                 width="258px" height="120px">
                         @else
                             <img id="child-image-three" src="" alt="Circuit diagram" height="120px">
@@ -1074,6 +1080,8 @@
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="child-name_four" id="child-name-four" value="{{ $production_request_child_element?->name }}"/>
+                <input type="hidden" name="child-qty_four" id="child-qty-four" value="{{ $production_request_child_element?->quantity }}"/>
                 <div class="row">
                     <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
@@ -1087,7 +1095,7 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                            <img id="child-image-four" src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
                                 width="258px" height="120px">
                         @else
                             <img id="child-image-four" src="" alt="Circuit diagram" height="120px">
@@ -1207,6 +1215,8 @@
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="child-name_five" id="child-name-five" value="{{ $production_request_child_element?->name }}"/>
+                <input type="hidden" name="child-qty_five" id="child-qty-five" value="{{ $production_request_child_element?->quantity }}"/>
                 <div class="row">
                     <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
                     </div>
@@ -1220,7 +1230,7 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                            <img id="child-image-five" src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
                                 width="258px" height="120px">
                         @else
                             <img id="child-image-five" src="" alt="Circuit diagram" height="120px">
@@ -1342,6 +1352,8 @@
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
                 <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="child-name_six" id="child-name-six" value="{{ $production_request_child_element?->name }}"/>
+                <input type="hidden" name="child-qty_six" id="child-qty-six" value="{{ $production_request_child_element?->quantity }}"/>
 
                <div class="row">
                     <div class="col-9"> <span class="fs-6">{{ $production_request_child_element?->name }}</span>
@@ -1356,7 +1368,7 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($production_request_child_element && $production_request_child_element->image)
-                            <img src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
+                            <img id="child-image-six" src="{{ asset('/' . $production_request_child_element->image) }}" alt="Child Image"
                                 width="258px" height="120px">
                         @else
                             <img id="child-image-six" src="" alt="Circuit diagram" height="120px">
