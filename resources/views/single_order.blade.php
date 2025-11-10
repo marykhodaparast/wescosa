@@ -660,8 +660,8 @@
             @endif
 
             @php
-                $product_child_element_id =
-                    App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id ?? 0;
+                // $product_child_element_id =
+                //     App\Models\ProductChildElement::where('product_id', $data->product_name_id)->first()?->id ?? 0;
 
                 $production_request_child_element = App\Models\ProductionRequestChildElement::where('po_id', $data->id)
                     ->where('child_element_id', 1)
@@ -674,7 +674,7 @@
                 @csrf
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
-                <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="product_child_element_id" value="1" />
                 <input type="hidden" name="child-name_one" id="child-name-one" value="{{ $production_request_child_element?->name }}"/>
                 <input type="hidden" name="child-qty_one" id="child-qty-one" value="{{ $production_request_child_element?->quantity }}"/>
                 <div class="row">
@@ -810,7 +810,7 @@
                     value="{{ old('child-image_two', $child->image ?? '') }}">
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
-                <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="product_child_element_id" value="2" />
                 <input type="hidden" name="child-name_two" id="child-name-two" value="{{ $production_request_child_element?->name }}"/>
                 <input type="hidden" name="child-qty_two" id="child-qty-two" value="{{ $production_request_child_element?->quantity }}"/>
                 <div class="row">
@@ -944,7 +944,7 @@
 
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
-                <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="product_child_element_id" value="3" />
                 <input type="hidden" name="child-name_three" id="child-name-three" value="{{ $production_request_child_element?->name }}"/>
                 <input type="hidden" name="child-qty_three" id="child-qty-three" value="{{ $production_request_child_element?->quantity }}"/>
                 <div class="row">
@@ -1079,7 +1079,7 @@
 
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
-                <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="product_child_element_id" value="4" />
                 <input type="hidden" name="child-name_four" id="child-name-four" value="{{ $production_request_child_element?->name }}"/>
                 <input type="hidden" name="child-qty_four" id="child-qty-four" value="{{ $production_request_child_element?->quantity }}"/>
                 <div class="row">
@@ -1214,7 +1214,7 @@
 
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
-                <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="product_child_element_id" value="5" />
                 <input type="hidden" name="child-name_five" id="child-name-five" value="{{ $production_request_child_element?->name }}"/>
                 <input type="hidden" name="child-qty_five" id="child-qty-five" value="{{ $production_request_child_element?->quantity }}"/>
                 <div class="row">
@@ -1351,7 +1351,7 @@
 
                 <input type="hidden" name="order_id" value="{{ $data->id }}">
                 <input type="hidden" name="product_id" value="{{ $data->product_name_id }}" />
-                <input type="hidden" name="product_child_element_id" value="{{ $product_child_element_id }}" />
+                <input type="hidden" name="product_child_element_id" value="6" />
                 <input type="hidden" name="child-name_six" id="child-name-six" value="{{ $production_request_child_element?->name }}"/>
                 <input type="hidden" name="child-qty_six" id="child-qty-six" value="{{ $production_request_child_element?->quantity }}"/>
 

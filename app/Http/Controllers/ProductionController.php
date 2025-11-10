@@ -183,7 +183,6 @@ class ProductionController extends Controller
             ->first();
 
         if (!$production_request_child_element) {
-
             $product_child_element = ProductChildElement::create([
                 'product_id' => $request->input('product_id'),
                 'name' => $product->name,
