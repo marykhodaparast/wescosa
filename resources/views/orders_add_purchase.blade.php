@@ -91,8 +91,8 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="product-select">Product</label>
-                                                    <select id="product-select" class="form-control" name="product_name_id"
-                                                        id="product_name_id" required>
+                                                    <select id="product-select" class="form-control"
+                                                        name="product_name_id" id="product_name_id" required>
                                                         <option value="">-- Select Product --</option>
 
                                                         @foreach ($products as $product)
@@ -167,7 +167,7 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="country-floating">Request Date</label>
-                                                    <input type="date" id="request_date" class="form-control"
+                                                    <input type="date" id="request_date" class="form-control" min="1900-01-01" max="2099-12-31"
                                                         name="request_date" placeholder="Request Date">
                                                     <p class="error-msg" id="error-msgrequestdate"></p>
                                                 </div>
@@ -175,8 +175,11 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="company-column">Start Date</label>
+                                                    {{-- <input type="date" id="start_date" class="form-control"
+                                                        name="start_date" placeholder="Start Date"> --}}
                                                     <input type="date" id="start_date" class="form-control"
-                                                        name="start_date" placeholder="Start Date">
+                                                        name="start_date" min="1900-01-01" max="2099-12-31"
+                                                        placeholder="Start Date" />
                                                     <p class="error-msg" id="error-msgstartdate"></p>
                                                 </div>
                                             </div>
@@ -184,14 +187,15 @@
                                                 <div class="form-group">
                                                     <label for="company-column">End Date</label>
                                                     <input type="date" id="end_date" class="form-control"
-                                                        name="end_date" placeholder="End Date">
+                                                        name="end_date" min="1900-01-01" max="2099-12-31"
+                                                        placeholder="End Date" />
                                                     <p class="error-msg" id="error-msgenddate"></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="company-column">ETD</label>
-                                                    <input type="date" id="etd" class="form-control"
+                                                    <input type="date" id="etd" class="form-control" min="1900-01-01" max="2099-12-31"
                                                         name="etd" placeholder="ETD">
                                                     <p class="error-msg" id="error-msgetd"></p>
                                                 </div>
@@ -199,7 +203,7 @@
                                             <div class="col-md-4 col-12">
                                                 <div class="form-group">
                                                     <label for="company-column">ATD</label>
-                                                    <input type="date" id="atd" class="form-control"
+                                                    <input type="date" id="atd" class="form-control" min="1900-01-01" max="2099-12-31"
                                                         name="atd" placeholder="ATD">
                                                     <p class="error-msg" id="error-msgatd"></p>
                                                 </div>
